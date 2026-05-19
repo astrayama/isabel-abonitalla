@@ -1,26 +1,102 @@
 @import "tailwindcss";
+@config "../../tailwind.config.ts";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: hsl(280, 40%, 92%);
+  --foreground: hsl(240, 30%, 20%);
+  --primary: hsl(330, 70%, 80%);
+  --accent: hsl(210, 70%, 75%);
+  --brand-pink: hsl(330, 70%, 80%);
+  --brand-purple: hsl(270, 50%, 75%);
+  --brand-blue: hsl(210, 70%, 75%);
+  --retro-bg: hsl(280, 40%, 92%);
+  --retro-dark: hsl(240, 30%, 20%);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@theme {
+  --color-brand-pink: var(--brand-pink);
+  --color-brand-purple: var(--brand-purple);
+  --color-brand-blue: var(--brand-blue);
+  --color-retro-bg: var(--retro-bg);
+  --color-retro-dark: var(--retro-dark);
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --background-image-page-gradient: linear-gradient(180deg, var(--brand-pink), var(--brand-purple), var(--brand-blue));
+  --background-image-retro-titlebar: linear-gradient(90deg, hsl(210, 70%, 85%), hsl(210, 70%, 75%));
+  --background-image-retro-grid: repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(255, 255, 255, 0.2) 20px), repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(255, 255, 255, 0.2) 20px);
+
+  --font-mono: var(--font-space-mono), monospace;
+  --font-sans: var(--font-inter), sans-serif;
+
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-marquee: marquee 15s linear infinite;
+  --animate-pulse2: pulse2 2s ease-in-out infinite;
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes marquee {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+  @keyframes pulse2 {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+  }
+  @keyframes accordion-down {
+    from { height: 0; }
+    to { height: var(--radix-accordion-content-height); }
+  }
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height); }
+    to { height: 0; }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--retro-bg);
+    background-image: linear-gradient(180deg, var(--brand-pink), var(--brand-purple), var(--brand-blue));
+    background-attachment: fixed;
+    color: var(--retro-dark);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+}
+
+@layer components {
+  .polaroid {
+    background: white;
+    padding: 12px 12px 40px 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    transform: rotate(2deg);
+    display: inline-block;
+    max-width: 320px;
+    border-radius: 2px;
+  }
+  .polaroid img {
+    display: block;
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    object-position: top center;
+  }
+  .polaroid-caption {
+    font-family: var(--font-caveat), cursive;
+    font-size: 24px;
+    text-align: center;
+    color: hsl(240 30% 30%);
+    margin-top: 12px;
+    line-height: 1;
+  }
 }

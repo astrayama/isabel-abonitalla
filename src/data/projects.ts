@@ -6,6 +6,7 @@ export type Project = {
   description: string;
   imageUrl: string;
   projectUrl: string;
+  stack: string[];
 };
 
 export const projects: Project[] = [
@@ -15,6 +16,7 @@ export const projects: Project[] = [
     description: 'Journal insights and visualizations',
     imageUrl: '/images/projects/yggdrasil.png',
     projectUrl: '#',
+    stack: ['React', 'TypeScript', 'OpenAI', 'Supabase', 'Node.js'],
   },
   {
     title: 'Anicca',
@@ -22,6 +24,7 @@ export const projects: Project[] = [
     description: 'A gentle mood and energy tracker that maps emotions to seven chakras',
     imageUrl: '/images/projects/anicca.png',
     projectUrl: '#',
+    stack: ['React', 'TypeScript', 'Firebase', 'AI/ML'],
   },
   {
     title: 'Polvo Planner',
@@ -29,6 +32,7 @@ export const projects: Project[] = [
     description: 'A pastry production planner for Toasty Polvo',
     imageUrl: '/images/projects/polvo.png',
     projectUrl: '#',
+    stack: ['React', 'TypeScript', 'Tailwind'],
   },
   {
     title: 'ColorFit',
@@ -36,6 +40,7 @@ export const projects: Project[] = [
     description: 'Get an outfit recommendation based on your skin tone!',
     imageUrl: '/images/projects/colorfit.png',
     projectUrl: '#',
+    stack: ['Python', 'ML', 'React'],
   },
   {
     title: 'meds.fyi',
@@ -43,6 +48,7 @@ export const projects: Project[] = [
     description: 'Healthcare Price Transparency platform for better medical cost visibility',
     imageUrl: '/images/projects/medsfyi.png',
     projectUrl: '#',
+    stack: ['React', 'GCP', 'SQL', 'Node.js'],
   },
   // Placeholders
   ...Array.from({ length: 12 }).map((_, i) => ({
@@ -51,5 +57,6 @@ export const projects: Project[] = [
     description: `Description for placeholder ${i + 1}`,
     imageUrl: `/images/projects/placeholder.png`,
     projectUrl: '#',
+    stack: [],
   }))
 ];

@@ -1,21 +1,23 @@
 import type { Metadata } from "next";
-import { Inter, Space_Mono, Caveat } from "next/font/google";
+import { Nunito, Silkscreen, Caveat } from "next/font/google";
+import { ThemeProvider } from 'next-themes';
 import "./globals.css";
 import Background from "@/components/layout/Background";
 import FloatingDecor from "@/components/layout/FloatingDecor";
 import Taskbar from "@/components/layout/Taskbar";
 
-const inter = Inter({
+const nunito = Nunito({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-nunito",
   display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
-const spaceMono = Space_Mono({
-  weight: ["400", "700"],
+const silkscreen = Silkscreen({
   subsets: ["latin"],
-  variable: "--font-space-mono",
+  variable: "--font-silkscreen",
   display: "swap",
+  weight: ["400", "700"],
 });
 
 const caveat = Caveat({
@@ -59,13 +61,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${spaceMono.variable} ${caveat.variable} font-sans antialiased pb-10`}>
-        <Background />
-        <FloatingDecor />
-        <div className="relative z-10">
-          {children}
-        </div>
-        <Taskbar />
+      <body className={`${nunito.variable} ${silkscreen.variable} ${caveat.variable} font-sans antialiased pb-10`}>
+        <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem={false}>
+          <Background />
+          <FloatingDecor />
+          <div className="relative z-10">{children}</div>
+          <Taskbar />
+        </ThemeProvider>
       </body>
     </html>
   );

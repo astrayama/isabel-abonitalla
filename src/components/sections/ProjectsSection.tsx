@@ -11,9 +11,15 @@ import {
 } from '@/components/ui/accordion';
 import OSWindow from '@/components/ui/OSWindow';
 import { projects, Category } from '@/data/projects';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
+
+function slugify(text: string) {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
 
 export default function ProjectsSection() {
   const [activeCategory, setActiveCategory] = useState<Category | 'All'>('All');
+  const { ref, isVisible } = useScrollReveal();
 
   const categories = useMemo(() => {
     const cats = new Set<Category>();
@@ -26,15 +32,22 @@ export default function ProjectsSection() {
     return projects.filter(p => p.categories.includes(activeCategory));
   }, [activeCategory]);
 
-  const initialProjects = filteredProjects.slice(0, 5);
-  const moreProjects = filteredProjects.slice(5);
+  const initialProjects = filteredProjects.slice(0, 6);
+  const moreProjects = filteredProjects.slice(6);
 
   return (
-    <section id="projects" className="py-20 px-4 md:px-8 max-w-6xl mx-auto">
+    <section
+      id="projects"
+      ref={ref}
+      className={`py-20 px-4 md:px-8 max-w-4xl mx-auto w-full transition-all duration-700 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+      }`}
+    >
+      <h2 className="font-mono text-4xl md:text-5xl font-bold text-retro-dark mb-10">
+        projects<span className="text-purple-600">.</span>
+      </h2>
+
       <div className="flex flex-col gap-8">
-        <h2 className="text-3xl font-mono font-bold text-slate-800">
-          projects<span className="text-purple-600">.</span>
-        </h2>
 
         {/* Filters */}
         <div className="flex flex-wrap gap-3">
@@ -94,7 +107,7 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
       transition={{ duration: 0.2 }}
       className="h-full flex"
     >
-      <OSWindow title={project.title} className="w-full flex flex-col">
+      <OSWindow title={`${slugify(project.title)}.proj`} className="w-full flex flex-col">
         <div className="flex flex-col h-full bg-slate-50">
           <div className="aspect-video bg-slate-200 relative overflow-hidden shrink-0">
             {/* Using standard img with placehold fallback */}
@@ -122,6 +135,22 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
             <p className="text-sm text-slate-600 flex-grow">
               {project.description}
             </p>
+
+            {/* Stack pills — only render if stack has items */}
+            {project.stack.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {project.stack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="font-mono text-[10px] bg-purple-50
+                      text-purple-700 border border-purple-200
+                      rounded-full px-2.5 py-0.5"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            )}
 
             <a
               href={project.projectUrl}

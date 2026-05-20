@@ -40,9 +40,11 @@ const Linkedin = ({ className }: { className?: string }) => (
   </svg>
 );
 import OSWindow from '@/components/ui/OSWindow';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function ContactSection() {
   const [visitorCount, setVisitorCount] = useState<number | null>(null);
+  const { ref, isVisible } = useScrollReveal();
 
   useEffect(() => {
     // Increment visitor count on mount
@@ -57,14 +59,20 @@ export default function ContactSection() {
   }, []);
 
   return (
-    <section id="contact" className="py-20 px-4 flex flex-col items-center">
+    <section
+      id="contact"
+      ref={ref}
+      className={`pt-20 pb-6 px-4 md:px-8 max-w-4xl mx-auto w-full flex flex-col transition-all duration-700 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+      }`}
+    >
       {/* Heading */}
-      <h2 className="text-5xl font-mono font-bold text-slate-800 text-center mb-10">
+      <h2 className="font-mono text-4xl md:text-5xl font-bold text-retro-dark mb-10">
         let's connect<span className="text-pink-500">.</span>
       </h2>
 
       {/* OSWindow */}
-      <div className="w-full max-w-2xl mb-16">
+      <div className="w-full max-w-2xl mx-auto mb-10">
         <OSWindow title="contact.exe" className="w-full">
           <div className="p-8 bg-slate-50 flex flex-col gap-8">
             <p className="text-slate-700 text-center text-lg">
@@ -109,36 +117,41 @@ export default function ContactSection() {
       </div>
 
       {/* Footer */}
-      <footer className="w-full max-w-4xl flex flex-col items-center gap-6">
+      <footer className="w-full max-w-4xl flex flex-col items-center gap-4 mt-4 pb-4">
+        {/* Small Header */}
+        <p className="text-[11px] font-mono text-slate-400 dark:text-slate-500 uppercase tracking-widest">
+          Learn about my work
+        </p>
+
         {/* Link row */}
         <div className="flex flex-wrap justify-center items-center gap-4 text-xs text-gray-500">
-          <a href="#" className="hover:text-gray-800 transition-colors">
-            Learn about my work
-          </a>
-          <span>|</span>
-          <a href="#" className="hover:text-gray-800 transition-colors">
+          <a href="#" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
             Creative Works
           </a>
           <span>|</span>
-          <a href="#" className="hover:text-gray-800 transition-colors">
+          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
             Resume
           </a>
           <span>|</span>
-          <a href="#" className="hover:text-gray-800 transition-colors">
+          <a href="https://devpost.com/isabiiil" target="_blank" rel="noopener noreferrer" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
             DevPost
           </a>
           <span>|</span>
-          <a href="#" className="hover:text-gray-800 transition-colors">
+          <a href="#" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
             Upwork
           </a>
         </div>
 
         {/* Visitor counter & Credits */}
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-sm font-mono text-slate-600">
-            visitors: {visitorCount !== null ? visitorCount : '...'}
-          </p>
-          <p className="text-xs text-gray-400 text-center">
+        <div className="flex flex-col items-center gap-2 mt-2">
+          {/* Visitor counter matching Open to Work badge */}
+          <div className="flex items-center gap-1.5 bg-purple-50 dark:bg-purple-500/15 border border-purple-200 dark:border-purple-400/30 rounded-full px-2.5 py-0.5 flex-shrink-0">
+            <span className="w-1.5 h-1.5 rounded-full bg-purple-500 dark:bg-purple-400 animate-pulse flex-shrink-0" />
+            <span className="font-sans text-[11px] font-semibold text-purple-600 dark:text-purple-400 whitespace-nowrap">
+              visitors: {visitorCount !== null ? visitorCount : '...'}
+            </span>
+          </div>
+          <p className="text-xs text-gray-400 text-center mt-1">
             Built with ❤️ using React, TypeScript, and Tailwind CSS
           </p>
         </div>

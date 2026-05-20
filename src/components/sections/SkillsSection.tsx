@@ -3,21 +3,29 @@
 import React, { useState } from 'react';
 import OSWindow from '@/components/ui/OSWindow';
 import { skillFolders } from '@/data/skills';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function SkillsSection() {
   const [activeFolderId, setActiveFolderId] = useState('languages');
+  const { ref, isVisible } = useScrollReveal();
 
   const activeFolder = skillFolders.find((f) => f.id === activeFolderId) || skillFolders[0];
 
   return (
-    <section id="skills" className="py-20 px-4 md:px-8 max-w-6xl mx-auto flex flex-col items-center">
-      <h2 className="text-3xl font-mono font-bold text-slate-800 self-start mb-8">
+    <section
+      id="skills"
+      ref={ref}
+      className={`py-20 px-4 md:px-8 max-w-4xl mx-auto w-full transition-all duration-700 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+      }`}
+    >
+      <h2 className="font-mono text-4xl md:text-5xl font-bold text-retro-dark mb-10">
         skills<span className="text-purple-600">.</span>
       </h2>
 
-      <div className="w-full max-w-4xl">
+      <div className="w-full">
         <OSWindow title="skills.exe" className="w-full">
-          <div className="bg-slate-100 p-6 flex flex-col min-h-[350px]">
+          <div className="bg-slate-100 px-4 pt-2 pb-4 flex flex-col">
             {/* Folder Tabs Row */}
             <div className="flex flex-wrap gap-1 mb-0 border-b border-gray-300 px-2 pt-2 relative z-10">
               {skillFolders.map((folder) => {
@@ -26,7 +34,7 @@ export default function SkillsSection() {
                   <button
                     key={folder.id}
                     onClick={() => setActiveFolderId(folder.id)}
-                    className="rounded-t-lg px-4 py-2 font-mono text-sm transition-all focus:outline-none"
+                    className="rounded-t-lg px-4 py-2 font-sans text-[13px] transition-all focus:outline-none"
                     style={{
                       backgroundColor: folder.color,
                       opacity: isActive ? 1 : 0.6,
@@ -47,17 +55,17 @@ export default function SkillsSection() {
 
             {/* Folder Content */}
             <div 
-              className="bg-white rounded-b-lg p-6 shadow-sm flex-1 border border-gray-200 relative z-0" 
+              className="bg-white rounded-b-lg p-5 shadow-sm flex-1 border border-gray-200 relative z-0 min-h-[100px]" 
               style={{ borderTop: 'none', borderTopLeftRadius: 0 }}
             >
-              <h3 className="font-mono text-lg mb-6 flex items-center gap-2" style={{ color: activeFolder.color }}>
+              {/* <h3 className="font-mono text-lg mb-6 flex items-center gap-2" style={{ color: activeFolder.color }}>
                 {activeFolder.label}
-              </h3>
+              </h3> */}
               <div className="flex flex-wrap gap-2">
                 {activeFolder.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="font-mono text-xs rounded-full px-3 py-1 border transition-colors cursor-default"
+                    className="skill-pill font-sans text-[11px] rounded-full px-3 py-1 border transition-colors cursor-default"
                     style={{
                       backgroundColor: '#ffffff',
                       borderColor: activeFolder.color,

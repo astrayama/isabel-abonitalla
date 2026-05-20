@@ -1,139 +1,154 @@
-"use client";
-
-import React, { useCallback, useState } from 'react';
-import useEmblaCarousel from 'embla-carousel-react';
-import { ChevronLeft, ChevronRight, Briefcase, ExternalLink } from 'lucide-react';
+'use client';
+import React, { useState } from 'react';
 import Image from 'next/image';
+import { ChevronRight, ChevronDown } from 'lucide-react';
 import OSWindow from '@/components/ui/OSWindow';
 import { experiences, Experience } from '@/data/experiences';
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
-function ExperienceCard({ exp }: { exp: Experience }) {
+const INITIAL_SHOW = 4;
+
+function slugify(text: string) {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+function ExperienceRow({ exp }: { exp: Experience }) {
+  const [isOpen, setIsOpen] = useState(false);
   const [imgError, setImgError] = useState(false);
 
-  return (
-    <OSWindow title={`${exp.company.toLowerCase()}.exe`} className="h-full flex flex-col">
-      <div className="relative p-6 flex flex-col flex-1 items-center text-center bg-white rounded-b-lg">
-        {/* Briefcase Icon top-centered */}
-        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-pink to-brand-purple flex items-center justify-center shadow-md mb-4 mt-2 border border-retro-dark/10">
-          <Briefcase className="text-white" size={24} />
-        </div>
+  const dateRange = `${exp.startDate} – ${exp.endDate}`;
+  const filename = `${slugify(exp.company)}.exp`;
 
-        {/* Company Logo or Placeholder */}
-        <div className="w-16 h-16 mb-4 relative flex items-center justify-center bg-retro-bg rounded-lg overflow-hidden border border-retro-dark shadow-[2px_2px_0px_0px_rgba(61,56,70,0.2)]">
+  return (
+    <div className="border-b border-gray-100 last:border-0">
+      {/* Row — always visible */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full grid grid-cols-[auto_1fr_auto_auto_auto]
+          md:grid-cols-[auto_1fr_auto_auto_auto]
+          gap-3 px-4 py-3 hover:bg-gray-50 items-center
+          text-left transition-colors group"
+        aria-expanded={isOpen}
+      >
+        {/* Logo */}
+        <div className="w-6 h-6 relative flex-shrink-0 flex items-center justify-center
+          bg-retro-bg rounded border border-gray-200 overflow-hidden">
           {!imgError ? (
-            <Image 
-              src={exp.logoUrl} 
-              alt={`${exp.company} logo`} 
-              fill
-              className="object-cover"
-              onError={() => setImgError(true)}
-            />
+            <Image src={exp.logoUrl} alt={exp.company} fill
+              className="object-contain" onError={() => setImgError(true)} />
           ) : (
-            <span className="font-mono font-bold text-xl text-brand-purple">
+            <span className="font-mono text-[10px] text-brand-purple font-bold">
               {exp.company.charAt(0)}
             </span>
           )}
         </div>
 
-        <h3 className="font-mono text-sm font-bold text-retro-dark mb-1">{exp.company}</h3>
-        <p className="text-sm text-gray-600 mb-3">{exp.role}</p>
+        {/* Filename */}
+        <span className="font-mono text-sm truncate
+          group-hover:text-brand-purple group-hover:font-bold transition-all">
+          {filename}
+        </span>
 
-        <div className="inline-block px-3 py-1 rounded-full bg-brand-purple/20 border border-brand-purple text-brand-purple text-xs font-bold font-mono mb-2">
-          {exp.date}
+        {/* Role — hidden on mobile */}
+        <span className="hidden md:block text-xs text-gray-500 font-sans w-44 truncate text-right">
+          {exp.role}
+        </span>
+
+        {/* Date */}
+        <span className="text-xs text-gray-400 font-mono w-28 text-right flex-shrink-0">
+          {dateRange}
+        </span>
+
+        {/* Expand chevron */}
+        <div className="w-5 text-gray-400 group-hover:text-brand-purple transition-colors flex-shrink-0">
+          {isOpen
+            ? <ChevronDown className="w-4 h-4" />
+            : <ChevronRight className="w-4 h-4" />}
         </div>
+      </button>
 
-        <p className="text-xs text-gray-400 mb-6 flex-1">{exp.location}</p>
-
-        <button className="flex items-center gap-1 text-xs font-mono font-bold text-brand-blue hover:text-brand-purple transition-colors mt-auto group">
-          More <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-        </button>
-      </div>
-    </OSWindow>
+      {/* Expanded bullets */}
+      {isOpen && (
+        <div className="px-4 pb-4 pl-14 bg-gray-50 border-t border-gray-100">
+          <p className="text-xs font-mono text-gray-400 mt-3 mb-2">{exp.location}</p>
+          <ul className="space-y-1.5">
+            {exp.bullets.map((b, i) => (
+              <li key={i} className="flex gap-2 text-sm text-gray-600 font-sans leading-relaxed">
+                <span className="text-brand-pink mt-0.5 flex-shrink-0">·</span>
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
   );
 }
 
 export default function ExperienceSection() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ 
-    align: 'start',
-    slidesToScroll: 1,
-    breakpoints: {
-      '(min-width: 768px)': { slidesToScroll: 2 },
-      '(min-width: 1024px)': { slidesToScroll: 4 }
-    }
-  });
+  const [showAll, setShowAll] = useState(false);
+  const { ref, isVisible } = useScrollReveal();
 
-  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
-
-  // Generate 10 dummy experiences for the grid
-  const moreExperiences: Experience[] = Array.from({ length: 10 }).map((_, i) => ({
-    company: `Company ${i + 1}`,
-    role: "Software Engineer",
-    date: "2020 - 2021",
-    location: "Remote",
-    logoUrl: `/images/companies/dummy.png`
-  }));
+  const visible = showAll ? experiences : experiences.slice(0, INITIAL_SHOW);
+  const remaining = experiences.length - INITIAL_SHOW;
 
   return (
-    <section id="experience" className="py-20 px-4 max-w-7xl mx-auto w-full">
-      <div className="mb-12 text-center md:text-left">
-        <h2 className="font-mono text-4xl md:text-5xl font-bold text-retro-dark inline-block relative">
-          experiences<span className="text-brand-pink">.</span>
-        </h2>
-      </div>
+    <section
+      id="experience"
+      ref={ref}
+      className={`py-20 px-4 md:px-8 max-w-4xl mx-auto w-full
+        transition-all duration-700
+        ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+    >
+      <h2 className="font-mono text-4xl md:text-5xl font-bold text-retro-dark mb-10">
+        experiences<span className="text-brand-pink">.</span>
+      </h2>
 
-      {/* Carousel Section */}
-      <div className="relative mb-12 group px-0 md:px-12">
-        <div className="overflow-hidden" ref={emblaRef}>
-          <div className="flex -ml-4 py-4">
-            {experiences.map((exp, index) => (
-              <div 
-                key={index} 
-                className="flex-[0_0_100%] min-w-0 pl-4 md:flex-[0_0_50%] lg:flex-[0_0_25%]"
-              >
-                <ExperienceCard exp={exp} />
-              </div>
-            ))}
+      <OSWindow title="experiences/" className="w-full">
+        <div className="bg-white rounded-b-lg overflow-hidden">
+
+          {/* Column headers */}
+          <div className="grid grid-cols-[auto_1fr_auto_auto_auto]
+            md:grid-cols-[auto_1fr_auto_auto_auto]
+            gap-3 px-4 py-2 border-b border-gray-200 bg-gray-50
+            font-mono text-[10px] text-gray-400 uppercase tracking-wide">
+            <div className="w-6" />
+            <div>File</div>
+            <div className="hidden md:block w-44 text-right">Role</div>
+            <div className="w-28 text-right">Date</div>
+            <div className="w-5" />
           </div>
+
+          {/* Rows */}
+          {visible.map((exp, i) => (
+            <ExperienceRow key={i} exp={exp} />
+          ))}
+
+          {/* Show more / collapse */}
+          {!showAll && remaining > 0 && (
+            <button
+              onClick={() => setShowAll(true)}
+              className="flex items-center gap-3 px-4 py-3 w-full text-left
+                hover:bg-gray-50 text-gray-500 hover:text-brand-purple
+                transition-colors border-t border-gray-100"
+            >
+              <ChevronRight className="w-4 h-4" />
+              <span className="font-mono text-sm">▾ Show {remaining} more files</span>
+            </button>
+          )}
+          {showAll && remaining > 0 && (
+            <button
+              onClick={() => setShowAll(false)}
+              className="flex items-center gap-3 px-4 py-3 w-full text-left
+                hover:bg-gray-50 text-gray-500 hover:text-brand-purple
+                transition-colors border-t border-gray-100"
+            >
+              <ChevronDown className="w-4 h-4" />
+              <span className="font-mono text-sm">▴ Collapse folder</span>
+            </button>
+          )}
         </div>
-
-        {/* Navigation Buttons */}
-        <button 
-          onClick={scrollPrev}
-          className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 hover:bg-white border-2 border-retro-dark items-center justify-center text-retro-dark shadow-[2px_2px_0px_0px_rgba(61,56,70,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all z-10"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft size={24} />
-        </button>
-        <button 
-          onClick={scrollNext}
-          className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 hover:bg-white border-2 border-retro-dark items-center justify-center text-retro-dark shadow-[2px_2px_0px_0px_rgba(61,56,70,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all z-10"
-          aria-label="Next slide"
-        >
-          <ChevronRight size={24} />
-        </button>
-      </div>
-
-      {/* Show More Accordion */}
-      <div className="bg-white/95 rounded-xl border-2 border-retro-dark shadow-[6px_6px_0px_0px_rgba(61,56,70,1)] p-4 md:p-8">
-        <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="more-experiences" className="border-none">
-            <AccordionTrigger className="hover:no-underline py-2 group">
-              <span className="font-mono font-bold text-retro-dark text-lg md:text-xl flex items-center gap-2 group-hover:text-brand-purple transition-colors">
-                Show More Experiences (10)
-              </span>
-            </AccordionTrigger>
-            <AccordionContent>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8 p-2">
-                {moreExperiences.map((exp, i) => (
-                  <ExperienceCard key={i} exp={exp} />
-                ))}
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-      </div>
+      </OSWindow>
     </section>
   );
 }

@@ -4,9 +4,11 @@ import React, { useState } from 'react';
 import { ExternalLink, ChevronDown, ChevronRight } from 'lucide-react';
 import OSWindow from '@/components/ui/OSWindow';
 import { news, NewsItem } from '@/data/news';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function NewsSection() {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { ref, isVisible } = useScrollReveal();
   
   const initialNews = news.slice(0, 3);
   const moreNews = news.slice(3);
@@ -19,8 +21,14 @@ export default function NewsSection() {
   };
 
   return (
-    <section id="press" className="py-20 px-4 md:px-8 max-w-4xl mx-auto flex flex-col items-center">
-      <h2 className="text-3xl font-mono font-bold text-slate-800 self-start mb-8">
+    <section
+      id="press"
+      ref={ref}
+      className={`py-20 px-4 md:px-8 max-w-4xl mx-auto w-full transition-all duration-700 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+      }`}
+    >
+      <h2 className="font-mono text-4xl md:text-5xl font-bold text-retro-dark mb-10">
         press/<span className="text-purple-600">.</span>
       </h2>
 
@@ -28,7 +36,7 @@ export default function NewsSection() {
         <OSWindow title="press/" className="w-full">
           <div className="bg-white overflow-hidden text-sm rounded-b-lg">
             {/* Column Headers */}
-            <div className="grid grid-cols-[1fr_auto_auto] md:grid-cols-[1fr_auto_auto_auto] gap-4 px-4 py-2 border-b border-gray-200 bg-gray-50 text-gray-500 font-mono text-xs uppercase">
+            <div className="grid grid-cols-[1fr_auto_auto] md:grid-cols-[1fr_auto_auto_auto] gap-4 px-4 py-2 border-b border-gray-200 bg-gray-50 text-gray-500 font-sans text-[11px] font-bold tracking-wider uppercase">
               <div>Name</div>
               <div className="hidden md:block w-32">Source</div>
               <div className="w-20 text-right">Date</div>
@@ -47,18 +55,18 @@ export default function NewsSection() {
                 >
                   <div className="flex items-center gap-3 overflow-hidden">
                     <span className="text-xs">📰</span>
-                    <span className="font-mono text-sm truncate group-hover:font-bold group-hover:text-brand-purple transition-all" title={item.title}>
+                    <span className="font-sans text-[13px] font-semibold truncate group-hover:text-brand-purple transition-all" title={item.title}>
                       {slugify(item.title)}
                     </span>
                   </div>
                   
                   <div className="hidden md:flex w-32 items-center">
-                    <span className="bg-slate-100 text-slate-600 text-[10px] font-mono px-2 py-0.5 rounded-full truncate border border-slate-200">
+                    <span className="category-badge bg-slate-100 text-slate-600 text-[11px] font-sans px-2 py-0.5 rounded-full truncate border border-slate-200">
                       {item.source || 'press'}
                     </span>
                   </div>
 
-                  <div className="w-20 text-right text-xs text-gray-400 font-mono truncate">
+                  <div className="w-20 text-right text-xs text-gray-400 font-sans font-medium truncate">
                     {item.date || '2023'}
                   </div>
 
@@ -75,7 +83,7 @@ export default function NewsSection() {
                   className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 text-gray-500 hover:text-brand-purple transition-colors text-left"
                 >
                   <ChevronRight className="w-4 h-4" />
-                  <span className="font-mono text-sm">▾ Show {moreNews.length} more files</span>
+                  <span className="font-sans text-xs font-semibold">▾ Show {moreNews.length} more files</span>
                 </button>
               )}
               {isExpanded && (
@@ -84,7 +92,7 @@ export default function NewsSection() {
                   className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 text-gray-500 hover:text-brand-purple transition-colors text-left"
                 >
                   <ChevronDown className="w-4 h-4" />
-                  <span className="font-mono text-sm">▴ Collapse folder</span>
+                  <span className="font-sans text-xs font-semibold">▴ Collapse folder</span>
                 </button>
               )}
             </div>

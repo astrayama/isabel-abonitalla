@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito, Silkscreen, Caveat } from "next/font/google";
 import { ThemeProvider } from 'next-themes';
+import { Analytics } from '@vercel/analytics/next';
 import "./globals.css";
 import Background from "@/components/layout/Background";
 import FloatingDecor from "@/components/layout/FloatingDecor";
@@ -68,6 +69,7 @@ export default function RootLayout({
           <div className="relative z-10">{children}</div>
           <Taskbar />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );

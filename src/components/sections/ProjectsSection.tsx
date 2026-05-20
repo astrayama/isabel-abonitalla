@@ -109,12 +109,12 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
     >
       <OSWindow title={`${slugify(project.title)}.proj`} className="w-full flex flex-col">
         <div className="flex flex-col h-full bg-slate-50">
-          <div className="aspect-video bg-slate-200 relative overflow-hidden shrink-0">
+          <div className="aspect-video bg-white relative overflow-hidden shrink-0 flex items-center justify-center">
             {/* Using standard img with placehold fallback */}
             <img 
               src={project.imageUrl} 
               alt={project.title}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain p-2"
               onError={(e) => {
                 e.currentTarget.src = 'https://placehold.co/600x400/e2e8f0/475569?text=No+Image';
               }}

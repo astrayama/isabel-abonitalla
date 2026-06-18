@@ -24,7 +24,7 @@ export const projects: Project[] = [
     description: 'A gentle mood and energy tracker that maps emotions to seven chakras',
     imageUrl: '/images/projects/anicca.jpg',
     projectUrl: 'https://anicca.lovable.app/',
-    stack: ['React', 'TypeScript', 'Tailwind CSS']
+    stack: ['React', 'TypeScript', 'Supabase', 'Tailwind CSS']
   },
   {
     title: 'Polvo Planner',

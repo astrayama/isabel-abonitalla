@@ -136,7 +136,7 @@ export default function Taskbar() {
       {OPEN_TO_WORK && (
         <div className="ml-3 flex items-center gap-1.5 bg-green-50 dark:bg-green-500/15 border border-green-200 dark:border-green-400/30 rounded-full px-2.5 py-0.5 flex-shrink-0">
           <span className="w-1.5 h-1.5 rounded-full bg-green-500 dark:bg-green-400 animate-pulse flex-shrink-0" />
-          <span className="font-sans text-[11px] font-semibold text-green-600 dark:text-green-400 whitespace-nowrap hidden sm:block">
+          <span className="font-sans text-[11px] font-semibold text-green-600 dark:text-green-400 whitespace-nowrap">
             open to work
           </span>
         </div>

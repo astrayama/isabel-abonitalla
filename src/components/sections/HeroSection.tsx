@@ -34,7 +34,7 @@ export default function HeroSection() {
   ]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center p-4">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-3xl flex flex-col items-center">
         <OSWindow title="welcome.exe" className="w-full">
           <div className="p-8 md:p-12 flex flex-col items-center text-center">
@@ -102,7 +102,7 @@ export default function HeroSection() {
 
       <a
         href="#about"
-        className="absolute bottom-12 animate-bounce p-2 text-gray-600 hover:text-retro-dark transition-colors"
+        className="absolute bottom-4 md:bottom-5 animate-bounce p-2 text-gray-600 hover:text-retro-dark transition-colors"
         aria-label="Scroll to about section"
       >
         <ChevronDown size={32} />

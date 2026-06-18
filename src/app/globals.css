@@ -11,6 +11,7 @@
   --brand-blue: hsl(210, 70%, 75%);
   --retro-bg: hsl(280, 40%, 92%);
   --retro-dark: hsl(240, 30%, 20%);
+  --pill-bg: #ffffff;
 
   /* Semantic Typography Variables (Light Mode Readability) */
   --text-primary: hsl(240, 30%, 20%);
@@ -31,6 +32,7 @@
   --brand-blue:    hsl(210, 60%, 60%);
   --retro-bg:      hsl(240, 25%, 12%);
   --retro-dark:    hsl(280, 60%, 92%);
+  --pill-bg:       hsl(240, 20%, 18%);
 
   /* Semantic Typography Variables (Dark Mode Readability) */
   --text-primary: hsl(280, 60%, 95%);
@@ -128,7 +130,7 @@
   --background-image-retro-titlebar: linear-gradient(90deg, hsl(210, 70%, 85%), hsl(210, 70%, 75%));
   --background-image-retro-grid: repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(255, 255, 255, 0.2) 20px), repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(255, 255, 255, 0.2) 20px);
 
-  --font-mono: var(--font-silkscreen), monospace;
+  --font-mono: var(--font-silkscreen), "Courier New", monospace;
   --font-sans: var(--font-nunito), sans-serif;
 
   --animate-float: float 3s ease-in-out infinite;
@@ -176,13 +178,13 @@
 
   /* Custom cursors */
   *, *::before, *::after {
-    cursor: url('/cursors/cursor-crosshair.png') 16 16, crosshair;
+    cursor: url('/cursors/cursor-crosshair.png') 16 16, crosshair !important;
   }
 
   a, button, [role="button"], label[for],
   input[type="submit"], input[type="button"],
   select, .cursor-pointer {
-    cursor: url('/cursors/cursor-pointer.png') 4 4, pointer;
+    cursor: url('/cursors/cursor-pointer.png') 4 4, pointer !important;
   }
 
   /* Inputs keep a text cursor */
@@ -228,7 +230,17 @@
 }
 
 /* Category badges & Skill pills typography adjustments */
-.skill-pill, .category-badge {
+.category-badge {
   font-family: var(--font-nunito), sans-serif !important;
   font-size: 11px !important;
+}
+
+.skill-pill {
+  font-family: var(--font-nunito), sans-serif !important;
+}
+
+@layer utilities {
+  .font-mono {
+    font-family: var(--font-silkscreen), "Courier New", monospace !important;
+  }
 }

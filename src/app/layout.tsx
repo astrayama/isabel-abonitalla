@@ -41,8 +41,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/og-image.png",
-        width: 1200,
-        height: 630,
+        width: 1024,
+        height: 682,
         alt: "Isabel Abonitalla - Portfolio Preview",
       },
     ],
@@ -53,6 +53,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Isabel Abonitalla - Product Builder, CS Undergrad, Accessibility Advocate",
     description: "Portfolio of Isabel Abonitalla: Product Builder, Computer Science Undergrad, and Accessibility Advocate, designed in a retro kawaii OS aesthetic.",
+    images: ["/og-image.png"],
   },
 };
 
@@ -62,7 +63,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className={`${nunito.variable} ${silkscreen.variable} ${caveat.variable} font-sans antialiased pb-10`}>
         <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem={false}>
           <Background />

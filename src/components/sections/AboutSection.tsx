@@ -20,10 +20,9 @@ export const AboutSection: React.FC = () => {
     }, 150);
   };
 
-  const bioText = `Hi, I'm Isa. I build products and organize hackathons. I'm interested in user empathy, accessibility, and building with intention—especially in games, creator tools, and spaces where technology can serve people in meaningful ways. I'm a neurodiverse technologist from New York City, and I think differently about what products should do. Finishing my degree in cloud computing at Purdue University Global. I'm actively seeking an APM role starting September. Come say hi if you want to talk about products, spirituality, or why design matters.`;
-
   return (
     <section
+      id="about"
       ref={ref}
       className={`relative py-20 px-4 md:px-8 max-w-4xl mx-auto w-full transition-all duration-1000 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
@@ -34,17 +33,27 @@ export const AboutSection: React.FC = () => {
       </h2>
 
         {/* Two-Panel Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-12 items-start">
           {/* Left Panel - Text Window */}
           <div
-            className={`transform transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+            className={`md:col-span-3 transform transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
               }`}
           >
             <OSWindow title="about.txt">
               <div className="p-6 space-y-5">
                 {/* Bio Text */}
                 <p className="text-gray-700 leading-relaxed text-sm md:text-base">
-                  {bioText}
+                  Hi, I'm{' '}
+                  <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-red-500 via-yellow-500 via-green-500 via-blue-500 to-purple-500 dark:from-pink-400 dark:via-red-400 dark:via-yellow-400 dark:via-green-400 dark:via-blue-400 dark:to-purple-400">
+                    Isabel Sofia V. Abonitalla
+                  </span>
+                  . I'm a software engineer turned product manager with a founder's instinct. I've shipped products at Microsoft and Roblox, coached 1,000+ hackers at Major League Hacking, and built an AI journaling SaaS from zero to paying customers.
+                  <br />
+                  I'm one of MLH's Top 50 most influential hackathon community members out of 135,000+ globally, and an 18× winner — including First Place at the Maternal Mortality & Morbidity Code-a-thon.
+                  <br />
+                  Currently finishing a cloud computing degree at Purdue (3.98 GPA) and actively looking for PM or SWE roles starting in September.
+                  <br />
+                  The rest of me? Hit the button. ↓
                 </p>
 
                 {/* Fun Fact Button */}
@@ -73,7 +82,7 @@ export const AboutSection: React.FC = () => {
 
           {/* Right Panel - Image Window */}
           <div
-            className={`flex justify-center items-start transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+            className={`md:col-span-2 flex justify-center items-start transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
               }`}
           >
             <div className="polaroid hover:rotate-0 transition-transform duration-300 cursor-pointer">

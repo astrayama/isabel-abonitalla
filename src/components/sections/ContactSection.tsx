@@ -125,7 +125,7 @@ export default function ContactSection() {
 
         {/* Link row */}
         <div className="flex flex-wrap justify-center items-center gap-4 text-xs text-gray-500">
-          <a href="#" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
+          <a href="https://isa23.lovable.app/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
             Creative Works
           </a>
           <span>|</span>
@@ -137,7 +137,7 @@ export default function ContactSection() {
             DevPost
           </a>
           <span>|</span>
-          <a href="#" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
+          <a href="https://www.upwork.com/freelancers/~01da5c274739c25969" target="_blank" rel="noopener noreferrer" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
             Upwork
           </a>
         </div>

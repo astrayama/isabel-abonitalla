@@ -35,6 +35,7 @@ function ExperienceRow({ exp }: { exp: Experience }) {
           bg-retro-bg rounded border border-gray-200 overflow-hidden">
           {!imgError ? (
             <Image src={exp.logoUrl} alt={exp.company} fill
+              sizes="24px"
               className="object-contain" onError={() => setImgError(true)} />
           ) : (
             <span className="font-mono text-[10px] text-brand-purple font-bold">

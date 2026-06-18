@@ -125,7 +125,7 @@ export default function ContactSection() {
 
         {/* Link row */}
         <div className="flex flex-wrap justify-center items-center gap-4 text-xs text-gray-500">
-          <a href="https://isa23.lovable.app/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
+          <a href="https://isa23-links.vercel.app/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
             Creative Works
           </a>
           <span>|</span>

@@ -25,7 +25,7 @@ function ExperienceRow({ exp }: { exp: Experience }) {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full grid grid-cols-[auto_1fr_auto_auto_auto]
-          md:grid-cols-[auto_1fr_auto_auto_auto]
+          md:grid-cols-[24px_1.5fr_1fr_144px_20px]
           gap-4 md:gap-6 px-4 py-3 hover:bg-gray-50 items-center
           text-left transition-colors group"
         aria-expanded={isOpen}
@@ -51,7 +51,7 @@ function ExperienceRow({ exp }: { exp: Experience }) {
         </span>
 
         {/* Role — hidden on mobile */}
-        <span className="hidden md:block text-xs text-gray-500 font-sans md:w-80 truncate text-right">
+        <span className="hidden md:block text-xs text-gray-500 font-sans truncate text-right">
           {exp.role}
         </span>
 
@@ -110,12 +110,12 @@ export default function ExperienceSection() {
 
           {/* Column headers */}
           <div className="grid grid-cols-[auto_1fr_auto_auto_auto]
-            md:grid-cols-[auto_1fr_auto_auto_auto]
+            md:grid-cols-[24px_1.5fr_1fr_144px_20px]
             gap-4 md:gap-6 px-4 py-2 border-b border-gray-200 bg-gray-50
             font-mono text-[10px] text-gray-400 uppercase tracking-wide">
             <div className="w-6" />
             <div>File</div>
-            <div className="hidden md:block md:w-80 text-right">Role</div>
+            <div className="hidden md:block text-right">Role</div>
             <div className="w-32 md:w-36 text-right">Date</div>
             <div className="w-5" />
           </div>

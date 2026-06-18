@@ -37,7 +37,7 @@ export default function HeroSection() {
     <section id="hero" className="relative min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-3xl flex flex-col items-center">
         <OSWindow title="welcome.exe" className="w-full">
-          <div className="p-8 md:p-12 flex flex-col items-center text-center">
+          <div className="p-6 md:p-12 flex flex-col items-center text-center">
             <h1 className="text-7xl md:text-8xl lg:text-[9.5rem] xl:text-[10.5rem] font-mono font-bold text-retro-dark mb-1 leading-none">
               Hi!
             </h1>
@@ -45,17 +45,17 @@ export default function HeroSection() {
               I'm Isabel,
             </h2>
 
-            <div className="flex items-center justify-center h-12 md:h-16 lg:h-20 mb-2">
-              <span className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-mono font-bold bg-gradient-to-r from-brand-pink to-brand-purple text-transparent bg-clip-text">
+            <div className="flex items-center justify-center h-10 sm:h-12 md:h-16 lg:h-20 mb-2">
+              <span className="text-lg sm:text-xl md:text-3xl lg:text-4xl font-mono font-bold bg-gradient-to-r from-brand-pink to-brand-purple text-transparent bg-clip-text whitespace-nowrap">
                 {displayText}
               </span>
-              <span className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-mono text-retro-dark animate-pulse">
+              <span className="text-lg sm:text-xl md:text-3xl lg:text-4xl font-mono text-retro-dark animate-pulse whitespace-nowrap">
                 |
               </span>
             </div>
 
             <p className="text-sm text-gray-500 font-sans font-medium mb-8">
-              Purdue 🌐, GPA 3.98 | 18x hackathon winner 🏆, MLH Top 50
+              Purdue 🌐 | GPA 3.98 || 18x hackathon winner 🏆 | MLH Top 50
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-3">

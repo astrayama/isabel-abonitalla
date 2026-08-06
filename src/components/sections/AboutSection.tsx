@@ -51,7 +51,7 @@ export const AboutSection: React.FC = () => {
                   <br />
                   I'm one of MLH's Top 50 most influential hackathon community members out of 135,000+ globally, and an 18× winner — including First Place at the Maternal Mortality & Morbidity Code-a-thon.
                   <br />
-                  Currently finishing a cloud computing degree at Purdue (3.98 GPA) and actively looking for PM or SWE roles starting in September.
+                  Currently finishing a cloud computing degree at Purdue (3.99 GPA) and actively looking for PM or SWE roles and <a href="https://screenseiji.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:text-purple-700 underline underline-offset-4 decoration-purple-600/30 hover:decoration-purple-600">pursuing personal projects</a>.
                   <br />
                   The rest of me? Hit the button. ↓
                 </p>

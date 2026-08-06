@@ -1,4 +1,4 @@
-export type Category = 'AI/ML' | 'Business & Finance' | 'Entertainment' | 'Healthcare' | 'Social Impact';
+export type Category = 'Featured' | 'AI/ML' | 'Business & Finance' | 'Entertainment' | 'Healthcare' | 'Social Impact';
 
 export type Project = {
   title: string;
@@ -11,16 +11,24 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    title: 'Arcana',
+    categories: ['Featured'],
+    description: 'A tarot journal in iOS',
+    imageUrl: '/images/projects/arcana.png',
+    projectUrl: 'https://testflight.apple.com/join/FZTcG7YT',
+    stack: ['Swift']
+  },
+  {
     title: 'Yggdrasil',
-    categories: ['AI/ML'],
+    categories: ['Featured', 'AI/ML'],
     description: 'Journal insights and visualizations',
     imageUrl: '/images/projects/yggdrasil.jpg',
-    projectUrl: 'https://yggdrasil-journal.lovable.app/',
-    stack: ['React', 'TypeScript', 'Google AI Studio', 'Supabase', 'Vite']
+    projectUrl: 'https://yggdrasil-dev-168739896450.us-central1.run.app/',
+    stack: ['Next', 'TypeScript', 'Google AI Studio', 'Supabase', 'Google Cloud Run']
   },
   {
     title: 'Anicca',
-    categories: ['Healthcare', 'AI/ML'],
+    categories: ['Featured', 'Healthcare', 'AI/ML'],
     description: 'A gentle mood and energy tracker that maps emotions to seven chakras',
     imageUrl: '/images/projects/anicca.jpg',
     projectUrl: 'https://anicca.lovable.app/',
@@ -36,7 +44,7 @@ export const projects: Project[] = [
   },
   {
     title: 'ColorFit',
-    categories: ['Entertainment'],
+    categories: ['Featured', 'Entertainment'],
     description: 'Get an outfit recommendation based on your skin tone!',
     imageUrl: '/images/projects/colorfit.png',
     projectUrl: 'https://devpost.com/software/colorfit',
@@ -92,7 +100,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Magenta',
-    categories: ['Entertainment', 'AI/ML'],
+    categories: ['Featured', 'Entertainment', 'AI/ML'],
     description: 'A Manga Soundtrack Generator, a Manga Jam',
     imageUrl: '/images/projects/magenta.png',
     projectUrl: 'https://devpost.com/software/magenta-8473n2',

@@ -18,7 +18,7 @@ function slugify(text: string) {
 }
 
 export default function ProjectsSection() {
-  const [activeCategory, setActiveCategory] = useState<Category | 'All'>('All');
+  const [activeCategory, setActiveCategory] = useState<Category | 'All'>('Featured');
   const { ref, isVisible } = useScrollReveal();
 
   const categories = useMemo(() => {
@@ -91,6 +91,16 @@ export default function ProjectsSection() {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
+        )}
+
+        {/* Show All Button */}
+        {activeCategory !== 'All' && (
+          <button
+            onClick={() => setActiveCategory('All')}
+            className="w-full mt-4 flex justify-center py-4 text-purple-600 hover:text-purple-700 font-mono font-bold bg-purple-50 hover:bg-purple-100 rounded-lg transition-colors"
+          >
+            Show All Projects
+          </button>
         )}
       </div>
     </section>

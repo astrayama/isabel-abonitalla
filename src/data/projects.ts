@@ -11,6 +11,14 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    title: 'Pantheon',
+    categories: ['Featured', 'AI/ML'],
+    description: 'personalized orchestrator + hud for 6 ai agents',
+    imageUrl: '/images/projects/pantheon.png',
+    projectUrl: 'https://github.com/astrayama/pantheon',
+    stack: ['n8n', 'Discord API', 'Next', 'TypeScript', 'Claude API']
+  },
+  {
     title: 'Arcana',
     categories: ['Featured'],
     description: 'A tarot journal in iOS',

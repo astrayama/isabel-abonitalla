@@ -55,7 +55,7 @@ export default function HeroSection() {
             </div>
 
             <p className="text-sm text-gray-500 font-sans font-medium mb-8">
-              Purdue 🌐 | GPA 3.98 || 18x hackathon winner 🏆 | MLH Top 50
+              Purdue 🌐 | GPA 3.99 || 18x hackathon winner 🏆 | MLH Top 50
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-3">

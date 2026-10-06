@@ -27,7 +27,7 @@ export const skillFolders = [
     id: 'tools',
     label: '🛠 tools/',
     color: 'hsl(180 50% 70%)',        // brand-teal
-    skills: ['Git','Adobe Creative Suite','Office 365','Lovable','Claude','Gemini','GPT','n8n'],
+    skills: ['Git','Adobe Creative Suite','Office 365','Lovable','Claude','Gemini','GPT','n8n','Unsloth'],
   },
   {
     id: 'product',

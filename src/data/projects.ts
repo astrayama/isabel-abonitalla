@@ -1,15 +1,37 @@
-export type Category = 'Featured' | 'AI/ML' | 'Business & Finance' | 'Entertainment' | 'Healthcare' | 'Social Impact';
+export type Category = 'Featured' | 'VR' | 'Mobile' | 'AI/ML' | 'Business & Finance' | 'Entertainment' | 'Healthcare' | 'Social Impact';
 
 export type Project = {
   title: string;
   categories: Category[];
   description: string;
   imageUrl: string;
+  // Optional looping demo video shown in place of the image (imageUrl is its poster)
+  videoUrl?: string;
   projectUrl: string;
+  // Optional second link, e.g. the GitHub repo for a project whose projectUrl is a live site
+  repoUrl?: string;
   stack: string[];
 };
 
 export const projects: Project[] = [
+  {
+    title: 'Lumenwright',
+    categories: ['Featured', 'VR', 'Entertainment'],
+    description: 'A mixed reality game where your real focus and steadiness power hard-light constructs',
+    imageUrl: '/images/projects/lumenwright.jpg',
+    videoUrl: '/videos/lumenwright-devlog01.mp4',
+    projectUrl: 'https://lumenwright-nu.vercel.app/',
+    stack: ['TypeScript', 'WebXR', 'Immersive Web SDK', 'Three.js']
+  },
+  {
+    title: 'Carta Luna',
+    categories: ['Featured', 'VR', 'Entertainment'],
+    description: 'Mixed-reality tarot for self-reflection, read on your real table',
+    imageUrl: '/images/projects/carta-luna.png',
+    projectUrl: 'https://cartaluna-mr.vercel.app/',
+    repoUrl: 'https://github.com/astrayama/arcana-mr',
+    stack: ['TypeScript', 'WebXR', 'Immersive Web SDK', 'Three.js']
+  },
   {
     title: 'Pantheon',
     categories: ['Featured', 'AI/ML'],
@@ -20,7 +42,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Arcana',
-    categories: ['Featured'],
+    categories: ['Mobile'],
     description: 'A tarot journal in iOS',
     imageUrl: '/images/projects/arcana.png',
     projectUrl: 'https://testflight.apple.com/join/FZTcG7YT',
@@ -36,7 +58,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Anicca',
-    categories: ['Featured', 'Healthcare', 'AI/ML'],
+    categories: ['Healthcare', 'AI/ML'],
     description: 'A gentle mood and energy tracker that maps emotions to seven chakras',
     imageUrl: '/images/projects/anicca.jpg',
     projectUrl: 'https://anicca.lovable.app/',
@@ -78,7 +100,7 @@ export const projects: Project[] = [
     title: 'WEmotion',
     categories: ['Healthcare'],
     description: 'WE are here to help alexithymia patients resolve their emotional conflicts.',
-    imageUrl: '/images/projects/wemotion.gif',
+    imageUrl: '/images/projects/wemotion.png',
     projectUrl: 'https://devpost.com/software/alexithymia',
     stack: ['React', 'Firebase', 'Chart.js']
   },
@@ -92,7 +114,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Tomo',
-    categories: ['Healthcare'],
+    categories: ['Mobile', 'Healthcare'],
     description: 'Your friend and personal guide empowering you on your journey towards self-growth!',
     imageUrl: '/images/projects/tomo.png',
     projectUrl: 'https://devpost.com/software/tomo',
@@ -123,6 +145,18 @@ export const projects: Project[] = [
     stack: ['React', 'Firebase']
   },
   {
+    title: 'Sift',
+    categories: ['Business & Finance'],
+    description: 'Helping restaurant owners sift through the noise and gain constructive feedback.',
+    imageUrl: '/images/projects/sift.png',
+    projectUrl: 'https://devpost.com/software/sift-sachacks-iii-project',
+    stack: ['Adobe XD', 'GCP', 'IBM Watson', 'Kaggle', 'Python']
+  }
+];
+
+// Archived: hidden from the site but kept here. Move an entry back into `projects` to restore it.
+export const archivedProjects: Project[] = [
+  {
     title: 'Face Mask Detection using Machine Learning',
     categories: ['AI/ML', 'Healthcare', 'Social Impact'],
     description: 'Enforce face mask wearing using machine learning.',
@@ -137,14 +171,6 @@ export const projects: Project[] = [
     imageUrl: '/images/projects/athena.jpg',
     projectUrl: 'https://devpost.com/software/athena-empathetic-playlists',
     stack: ['React Native', 'Spotify API', 'Emotiv', 'Python']
-  },
-  {
-    title: 'Sift',
-    categories: ['Business & Finance'],
-    description: 'Helping restaurant owners sift through the noise and gain constructive feedback.',
-    imageUrl: '/images/projects/sift.png',
-    projectUrl: 'https://devpost.com/software/sift-sachacks-iii-project',
-    stack: ['Adobe XD', 'GCP', 'IBM Watson', 'Kaggle', 'Python']
   },
   {
     title: 'Safely',

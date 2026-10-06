@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
+import { Code, ExternalLink } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
@@ -119,17 +119,34 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
     >
       <OSWindow title={`${slugify(project.title)}.proj`} className="w-full flex flex-col">
         <div className="flex flex-col h-full bg-slate-50">
-          <div className="aspect-video bg-white relative overflow-hidden shrink-0 flex items-center justify-center">
-            {/* Using standard img with placehold fallback */}
-            <img 
-              src={project.imageUrl} 
-              alt={project.title}
-              className="w-full h-full object-contain p-2"
-              onError={(e) => {
-                e.currentTarget.src = 'https://placehold.co/600x400/e2e8f0/475569?text=No+Image';
-              }}
-            />
-          </div>
+          {project.videoUrl ? (
+            <div className="aspect-video bg-slate-950 relative overflow-hidden shrink-0 flex items-center justify-center">
+              {/* Silent demo clip, so it can autoplay; letterboxed since it may be vertical */}
+              <video
+                src={project.videoUrl}
+                poster={project.imageUrl}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                aria-label={`${project.title} demo video`}
+                className="w-full h-full object-contain"
+              />
+            </div>
+          ) : (
+            <div className="aspect-video bg-white relative overflow-hidden shrink-0 flex items-center justify-center">
+              {/* Using standard img with placehold fallback */}
+              <img 
+                src={project.imageUrl} 
+                alt={project.title}
+                className="w-full h-full object-contain p-2"
+                onError={(e) => {
+                  e.currentTarget.src = 'https://placehold.co/600x400/e2e8f0/475569?text=No+Image';
+                }}
+              />
+            </div>
+          )}
           <div className="p-5 flex flex-col flex-grow gap-4">
             <div className="flex flex-wrap gap-2">
               {project.categories.map((cat) => (
@@ -162,18 +179,34 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
               </div>
             )}
 
-            <a
-              href={project.projectUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 w-full py-2 px-4 bg-slate-900 text-white rounded-md hover:bg-slate-800 transition-colors text-sm font-medium mt-auto"
-            >
-              <ExternalLink className="w-4 h-4" />
-              View Project
-            </a>
+            <div className="flex flex-wrap gap-2 mt-auto">
+              {[project.projectUrl, project.repoUrl].filter(Boolean).map((url) => (
+                <ProjectLink key={url} url={url!} />
+              ))}
+            </div>
           </div>
         </div>
       </OSWindow>
     </motion.div>
+  );
+}
+
+// GitHub links share one style and label; every other link (Devpost, live sites) shares another
+function ProjectLink({ url }: { url: string }) {
+  const isGitHub = new URL(url).hostname === 'github.com';
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`inline-flex items-center justify-center gap-2 flex-1 whitespace-nowrap py-2 px-3 rounded-md transition-colors text-sm font-medium ${
+        isGitHub
+          ? 'bg-white text-slate-900 border border-slate-300 hover:bg-slate-100'
+          : 'bg-slate-900 text-white border border-slate-900 hover:bg-slate-800 hover:border-slate-800'
+      }`}
+    >
+      {isGitHub ? <Code className="w-4 h-4" /> : <ExternalLink className="w-4 h-4" />}
+      {isGitHub ? 'GitHub' : 'View Project'}
+    </a>
   );
 }

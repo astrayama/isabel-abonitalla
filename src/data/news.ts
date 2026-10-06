@@ -4,6 +4,8 @@ export type NewsItem = {
   url: string;
   source?: string;
   date?: string;
+  // Pinned items show first while the press folder is collapsed, in pinnedOrder
+  pinnedOrder?: number;
 };
 
 export const news: NewsItem[] = [
@@ -61,14 +63,16 @@ export const news: NewsItem[] = [
     description: "Named one of Major League Hacking's Top 50 Hackers out of 100,000 participants",
     url: "https://top.mlh.io/2020/profiles/isabel-abonitalla",
     source: "Major League Hacking",
-    date: "2020"
+    date: "2020",
+    pinnedOrder: 2
   },
   {
     title: "Shine Podcast: Celebrating Your Whole Self at Work",
     description: "Discussion with Shine co-founders about workspace culture",
     url: "https://youtu.be/ae2pofZ5L1Q",
     source: "Shine App",
-    date: "2020"
+    date: "2020",
+    pinnedOrder: 1
   },
   {
     title: "NJII Code-a-thon focuses on Maternal Mortality and Morbidity",
@@ -82,7 +86,8 @@ export const news: NewsItem[] = [
     description: "Valedictorian speech at Newtown High School graduation",
     url: "https://youtu.be/XOcD6CwDPB8",
     source: "YouTube",
-    date: "2019"
+    date: "2019",
+    pinnedOrder: 3
   },
   {
     title: "Consortium Alumni Youth Council: Urban Barcode Research Project",

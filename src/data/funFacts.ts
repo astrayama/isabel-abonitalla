@@ -11,7 +11,6 @@ export const funFacts = [
   // ── the contradictions ──
   "I'm a CS undergrad who reads tarot cards. Both are just pattern recognition, honestly.",
   "My app Anicca is named after the Buddhist concept of impermanence — everything in constant flux. It felt right for a mood tracker.",
-  "I think in cursive. Even though I live in my laptop, my best ideas still start handwritten, sometimes in actual cursive, in an actual notebook.",
   "I can't ride a bike. I also can't swim. Not for lack of trying — both have just remained unconquered.",
   "I don't, can't, and won't drive. I'm terrified of driving and I'm at peace with that.",
 

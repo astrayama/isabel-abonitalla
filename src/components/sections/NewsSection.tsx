@@ -10,10 +10,13 @@ export default function NewsSection() {
   const [isExpanded, setIsExpanded] = useState(false);
   const { ref, isVisible } = useScrollReveal();
   
-  const initialNews = news.slice(0, 3);
-  const moreNews = news.slice(3);
+  // Collapsed: pinned items only. Expanded: everything in chronological order.
+  const pinnedNews = news
+    .filter((item) => item.pinnedOrder !== undefined)
+    .sort((a, b) => a.pinnedOrder! - b.pinnedOrder!);
+  const moreNews = news.filter((item) => item.pinnedOrder === undefined);
 
-  const displayedNews = isExpanded ? news : initialNews;
+  const displayedNews = isExpanded ? news : pinnedNews;
 
   // helper to slugify title
   const slugify = (text: string) => {
@@ -54,7 +57,7 @@ export default function NewsSection() {
                   className="grid grid-cols-[1fr_auto_auto] md:grid-cols-[1fr_auto_auto_auto] gap-4 px-4 py-3 border-b border-gray-100 hover:bg-gray-50 items-center group transition-colors"
                 >
                   <div className="flex items-center gap-3 overflow-hidden">
-                    <span className="text-xs">📰</span>
+                    <span className="text-xs">{!isExpanded && item.pinnedOrder !== undefined ? '📌' : '📰'}</span>
                     <span className="font-sans text-[13px] font-semibold truncate group-hover:text-brand-purple transition-all" title={item.title}>
                       {slugify(item.title)}
                     </span>

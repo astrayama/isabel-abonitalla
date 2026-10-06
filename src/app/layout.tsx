@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Nunito, Silkscreen, Caveat } from "next/font/google";
+import { Nunito, DotGothic16, Caveat } from "next/font/google";
 import { ThemeProvider } from 'next-themes';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -15,11 +15,11 @@ const nunito = Nunito({
   weight: ["400", "500", "600", "700"],
 });
 
-const silkscreen = Silkscreen({
+const dotGothic = DotGothic16({
   subsets: ["latin"],
-  variable: "--font-silkscreen",
+  variable: "--font-dotgothic",
   display: "swap",
-  weight: ["400", "700"],
+  weight: "400",
 });
 
 const caveat = Caveat({
@@ -64,7 +64,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      <body className={`${nunito.variable} ${silkscreen.variable} ${caveat.variable} font-sans antialiased pb-10`}>
+      <body className={`${nunito.variable} ${dotGothic.variable} ${caveat.variable} font-sans antialiased pb-10`}>
         <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem={false}>
           <Background />
           <FloatingDecor />

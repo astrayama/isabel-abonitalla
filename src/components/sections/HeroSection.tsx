@@ -75,7 +75,7 @@ export default function HeroSection() {
                     style={scrollMoment ? { y: avatarY, opacity: avatarOpacity } : undefined}
                   >
                     <IntroAvatar className="absolute inset-0" />
-                    <div className="absolute top-0 left-[52%] rounded-[16px_16px_16px_4px] border-2 border-edge bg-window px-3 py-1.5 font-hand text-lg font-bold whitespace-nowrap shadow-[0_4px_0_hsla(240,30%,20%,0.25)] sm:top-1.5 sm:left-[206px] sm:px-3.5 sm:py-2 sm:text-2xl">
+                    <div className="absolute top-0 left-[64%] rounded-[16px_16px_16px_4px] border-2 border-edge bg-window px-3 py-1.5 font-hand text-lg font-bold whitespace-nowrap shadow-[0_4px_0_hsla(240,30%,20%,0.25)] sm:top-1.5 sm:left-[206px] sm:px-3.5 sm:py-2 sm:text-2xl">
                       hi! I&apos;m Isabel ✿
                     </div>
                     <span aria-hidden="true" className="absolute top-[140px] left-0.5 text-lg text-[#fcd34d]">✦</span>

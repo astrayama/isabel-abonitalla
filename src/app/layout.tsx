@@ -66,7 +66,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className={`${nunito.variable} ${dotGothic.variable} ${caveat.variable} font-sans antialiased pb-12`}>
-        <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem={false}>
+        <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
           <Background />
           <FloatingDecor />
           <div className="relative z-10">

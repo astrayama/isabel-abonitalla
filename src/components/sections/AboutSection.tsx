@@ -22,7 +22,7 @@ export const AboutSection: React.FC = () => {
       <div
         ref={bioRef}
         className={cn(
-          'min-w-0 flex-[1_1_360px] transition-all duration-1000 lg:pt-[72px]',
+          'min-w-0 flex-[1_1_360px] transition-[opacity,translate] duration-1000 lg:pt-[72px]',
           bioVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
         )}
       >
@@ -58,7 +58,7 @@ export const AboutSection: React.FC = () => {
       <div
         ref={factsRef}
         className={cn(
-          'min-w-0 flex-[1_1_280px] transition-all delay-200 duration-1000 lg:pt-[72px]',
+          'min-w-0 flex-[1_1_280px] transition-[opacity,translate] delay-200 duration-1000 lg:pt-[72px]',
           factsVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
         )}
       >

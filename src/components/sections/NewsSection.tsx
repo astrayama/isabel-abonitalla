@@ -25,7 +25,7 @@ export default function NewsSection() {
     <section
       id="press"
       ref={ref}
-      className={`mx-auto w-full max-w-[1100px] px-4 py-[72px] transition-all duration-700 sm:px-6 ${
+      className={`mx-auto w-full max-w-[1100px] px-4 py-[72px] transition-[opacity,translate] duration-700 sm:px-6 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
       }`}
     >

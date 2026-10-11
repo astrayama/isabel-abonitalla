@@ -14,7 +14,7 @@ export default function AchievementsSection() {
     <section
       id="achievements"
       ref={ref}
-      className={`mx-auto w-full max-w-[1200px] px-4 pt-[72px] pb-10 transition-all duration-700 sm:px-6 ${
+      className={`mx-auto w-full max-w-[1200px] px-4 pt-[72px] pb-10 transition-[opacity,translate] duration-700 sm:px-6 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
       }`}
     >

@@ -11,6 +11,11 @@ export type Project = {
   // Optional second link, e.g. the GitHub repo for a project whose projectUrl is a live site
   repoUrl?: string;
   stack: string[];
+  // Position in the homepage's featured accordion; unset projects only appear in the full folder
+  featuredOrder?: number;
+  // Backdrop behind the accordion preview, and how the preview fits it
+  previewBg?: string;
+  previewFit?: 'cover' | 'contain';
 };
 
 export const projects: Project[] = [
@@ -21,6 +26,9 @@ export const projects: Project[] = [
     imageUrl: '/images/projects/lumenwright.jpg',
     videoUrl: '/videos/lumenwright-devlog01.mp4',
     projectUrl: 'https://lumenwright-nu.vercel.app/',
+    featuredOrder: 1,
+    previewBg: 'hsl(240, 40%, 14%)',
+    previewFit: 'contain',
     stack: ['TypeScript', 'WebXR', 'Immersive Web SDK', 'Three.js']
   },
   {
@@ -30,6 +38,9 @@ export const projects: Project[] = [
     imageUrl: '/images/projects/carta-luna.png',
     projectUrl: 'https://cartaluna-mr.vercel.app/',
     repoUrl: 'https://github.com/astrayama/arcana-mr',
+    featuredOrder: 2,
+    previewBg: 'hsl(330, 70%, 92%)',
+    previewFit: 'cover',
     stack: ['TypeScript', 'WebXR', 'Immersive Web SDK', 'Three.js']
   },
   {
@@ -46,6 +57,9 @@ export const projects: Project[] = [
     description: 'A tarot journal in iOS',
     imageUrl: '/images/projects/arcana.png',
     projectUrl: 'https://testflight.apple.com/join/FZTcG7YT',
+    featuredOrder: 5,
+    previewBg: 'hsl(262, 32%, 24%)',
+    previewFit: 'cover',
     stack: ['Swift']
   },
   {
@@ -54,6 +68,9 @@ export const projects: Project[] = [
     description: 'Journal insights and visualizations',
     imageUrl: '/images/projects/yggdrasil.jpg',
     projectUrl: 'https://yggdrasil-dev-168739896450.us-central1.run.app/',
+    featuredOrder: 3,
+    previewBg: 'hsl(35, 80%, 95%)',
+    previewFit: 'contain',
     stack: ['Next', 'TypeScript', 'Google AI Studio', 'Supabase', 'Google Cloud Run']
   },
   {
@@ -78,6 +95,9 @@ export const projects: Project[] = [
     description: 'Get an outfit recommendation based on your skin tone!',
     imageUrl: '/images/projects/colorfit.png',
     projectUrl: 'https://devpost.com/software/colorfit',
+    featuredOrder: 4,
+    previewBg: 'hsl(210, 70%, 92%)',
+    previewFit: 'cover',
     stack: ['Python', 'OpenCV', 'Cohere', 'Flask', 'Next.js']
   },
   {

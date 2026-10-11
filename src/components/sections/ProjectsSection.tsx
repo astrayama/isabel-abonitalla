@@ -1,212 +1,42 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Code, ExternalLink } from 'lucide-react';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
-import OSWindow from '@/components/ui/OSWindow';
-import { projects, Category } from '@/data/projects';
+import React, { useState } from 'react';
+import SectionHeading from '@/components/ui/SectionHeading';
+import ProjectAccordion from './projects/ProjectAccordion';
+import ProjectGrid from './projects/ProjectGrid';
+import { projects } from '@/data/projects';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
-function slugify(text: string) {
-  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-}
-
 export default function ProjectsSection() {
-  const [activeCategory, setActiveCategory] = useState<Category | 'All'>('Featured');
+  const [folderOpen, setFolderOpen] = useState(false);
   const { ref, isVisible } = useScrollReveal();
-
-  const categories = useMemo(() => {
-    const cats = new Set<Category>();
-    projects.forEach(p => p.categories.forEach(c => cats.add(c)));
-    return ['All', ...Array.from(cats)] as (Category | 'All')[];
-  }, []);
-
-  const filteredProjects = useMemo(() => {
-    if (activeCategory === 'All') return projects;
-    return projects.filter(p => p.categories.includes(activeCategory));
-  }, [activeCategory]);
-
-  const initialProjects = filteredProjects.slice(0, 6);
-  const moreProjects = filteredProjects.slice(6);
 
   return (
     <section
       id="projects"
       ref={ref}
-      className={`py-20 px-4 md:px-8 max-w-4xl mx-auto w-full transition-all duration-700 ${
+      className={`mx-auto w-full max-w-[1200px] px-4 py-[72px] transition-all duration-700 sm:px-6 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
       }`}
     >
-      <h2 className="font-mono text-4xl md:text-5xl font-bold text-retro-dark mb-10">
-        projects<span className="text-purple-600">.</span>
-      </h2>
-
-      <div className="flex flex-col gap-8">
-
-        {/* Filters */}
-        <div className="flex flex-wrap gap-3">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                activeCategory === cat
-                  ? 'bg-purple-600 text-white'
-                  : 'bg-purple-100 text-purple-800 hover:bg-purple-200'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* Project Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <AnimatePresence mode="popLayout">
-            {initialProjects.map((project) => (
-              <ProjectCard key={project.title} project={project} />
-            ))}
-          </AnimatePresence>
-        </div>
-
-        {/* Accordion for more projects */}
-        {moreProjects.length > 0 && (
-          <Accordion type="single" collapsible className="w-full mt-4">
-            <AccordionItem value="more-projects" className="border-none">
-              <AccordionTrigger className="w-full flex justify-center py-4 text-purple-600 hover:text-purple-700 hover:no-underline bg-purple-50 rounded-lg">
-                Show More Projects ({moreProjects.length})
-              </AccordionTrigger>
-              <AccordionContent className="pt-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {moreProjects.map((project) => (
-                    <ProjectCard key={project.title} project={project} />
-                  ))}
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        )}
-
-        {/* Show All Button */}
-        {activeCategory !== 'All' && (
+      <div className="flex flex-wrap items-end justify-between gap-5">
+        <SectionHeading eyebrow="PROJECTS/" title="things I've" accent="built" className="min-w-0 flex-[1_1_480px]" />
+        <div className="flex-[0_1_320px] text-base leading-[1.55] text-ink-soft">
+          <p className="m-0">{projects.length} files in projects/. Hover or tap a window to open it.</p>
           <button
-            onClick={() => setActiveCategory('All')}
-            className="w-full mt-4 flex justify-center py-4 text-purple-600 hover:text-purple-700 font-mono font-bold bg-purple-50 hover:bg-purple-100 rounded-lg transition-colors"
+            onClick={() => setFolderOpen(!folderOpen)}
+            aria-expanded={folderOpen}
+            aria-controls="project-folder"
+            className="mt-1.5 inline-block font-extrabold text-[hsl(270,45%,40%)] underline underline-offset-4 hover:text-accent dark:text-[hsl(270,60%,82%)]"
           >
-            Show All Projects
+            {folderOpen ? 'close the folder ↑' : 'open the whole folder →'}
           </button>
-        )}
-      </div>
-    </section>
-  );
-}
-
-function ProjectCard({ project }: { project: typeof projects[0] }) {
-  return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9 }}
-      transition={{ duration: 0.2 }}
-      className="h-full flex"
-    >
-      <OSWindow title={`${slugify(project.title)}.proj`} className="w-full flex flex-col">
-        <div className="flex flex-col h-full bg-slate-50">
-          {project.videoUrl ? (
-            <div className="aspect-video bg-slate-950 relative overflow-hidden shrink-0 flex items-center justify-center">
-              {/* Silent demo clip, so it can autoplay; letterboxed since it may be vertical */}
-              <video
-                src={project.videoUrl}
-                poster={project.imageUrl}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                aria-label={`${project.title} demo video`}
-                className="w-full h-full object-contain"
-              />
-            </div>
-          ) : (
-            <div className="aspect-video bg-white relative overflow-hidden shrink-0 flex items-center justify-center">
-              {/* Using standard img with placehold fallback */}
-              <img 
-                src={project.imageUrl} 
-                alt={project.title}
-                className="w-full h-full object-contain p-2"
-                onError={(e) => {
-                  e.currentTarget.src = 'https://placehold.co/600x400/e2e8f0/475569?text=No+Image';
-                }}
-              />
-            </div>
-          )}
-          <div className="p-5 flex flex-col flex-grow gap-4">
-            <div className="flex flex-wrap gap-2">
-              {project.categories.map((cat) => (
-                <span
-                  key={cat}
-                  className="px-2 py-1 text-xs font-medium rounded-md bg-purple-100 text-purple-800"
-                >
-                  {cat}
-                </span>
-              ))}
-            </div>
-            
-            <p className="text-sm text-slate-600 flex-grow">
-              {project.description}
-            </p>
-
-            {/* Stack pills — only render if stack has items */}
-            {project.stack.length > 0 && (
-              <div className="flex flex-wrap gap-1.5">
-                {project.stack.map((tech) => (
-                  <span
-                    key={tech}
-                    className="font-mono text-[10px] bg-purple-50
-                      text-purple-700 border border-purple-200
-                      rounded-full px-2.5 py-0.5"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            )}
-
-            <div className="flex flex-wrap gap-2 mt-auto">
-              {[project.projectUrl, project.repoUrl].filter(Boolean).map((url) => (
-                <ProjectLink key={url} url={url!} />
-              ))}
-            </div>
-          </div>
         </div>
-      </OSWindow>
-    </motion.div>
-  );
-}
+      </div>
 
-// GitHub links share one style and label; every other link (Devpost, live sites) shares another
-function ProjectLink({ url }: { url: string }) {
-  const isGitHub = new URL(url).hostname === 'github.com';
-  return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`inline-flex items-center justify-center gap-2 flex-1 whitespace-nowrap py-2 px-3 rounded-md transition-colors text-sm font-medium ${
-        isGitHub
-          ? 'bg-white text-slate-900 border border-slate-300 hover:bg-slate-100'
-          : 'bg-slate-900 text-white border border-slate-900 hover:bg-slate-800 hover:border-slate-800'
-      }`}
-    >
-      {isGitHub ? <Code className="w-4 h-4" /> : <ExternalLink className="w-4 h-4" />}
-      {isGitHub ? 'GitHub' : 'View Project'}
-    </a>
+      <ProjectAccordion />
+
+      <div id="project-folder">{folderOpen && <ProjectGrid />}</div>
+    </section>
   );
 }

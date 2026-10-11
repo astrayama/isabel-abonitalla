@@ -1,141 +1,148 @@
 @import "tailwindcss";
 @config "../../tailwind.config.ts";
 
+/* `dark:` follows the theme toggle (data-theme on <html>), not the OS setting */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 :root {
-  --background: hsl(280, 40%, 92%);
-  --foreground: hsl(240, 30%, 20%);
-  --primary: hsl(330, 70%, 80%);
-  --accent: hsl(210, 70%, 75%);
+  /* Kawaii OS palette (light) */
+  --ink: hsl(240, 30%, 20%);
+  --ink-soft: hsl(240, 12%, 30%);
+  --muted: hsl(240, 8%, 42%);
+  --on-ink: #ffffff;
+  --window: #ffffff;
+  --window-alt: hsl(270, 40%, 97%);
+  --window-line: hsl(270, 40%, 93%);
+  --edge: hsl(240, 30%, 20%);
+  --edge-soft: hsla(240, 30%, 20%, 0.2);
+  --hard: hsl(240, 30%, 20%);
+  --soft-shadow: hsla(260, 45%, 30%, 0.4);
+  --accent: hsl(330, 60%, 46%);
+  --accent-shadow: hsl(330, 60%, 60%);
+  --accent-glyph: hsl(330, 65%, 62%);
+
+  /* Folder tints: strong for tiles, wash for backgrounds */
+  --tint-lilac: hsl(270, 50%, 80%);
+  --tint-pink: hsl(330, 70%, 84%);
+  --tint-blue: hsl(210, 70%, 80%);
+  --tint-sky: hsl(200, 80%, 82%);
+  --tint-teal: hsl(180, 50%, 76%);
+  --tint-yellow: hsl(45, 90%, 76%);
+  --wash-lilac: hsl(270, 50%, 94%);
+  --wash-pink: hsl(330, 70%, 93%);
+  --wash-blue: hsl(210, 70%, 92%);
+  --wash-sky: hsl(200, 80%, 93%);
+  --wash-teal: hsl(180, 50%, 90%);
+  --wash-yellow: hsl(45, 90%, 90%);
+
+  --titlebar-blue: linear-gradient(90deg, hsl(222, 58%, 42%), hsl(212, 60%, 48%));
+  --titlebar-pink: linear-gradient(90deg, hsl(330, 80%, 76%), hsl(330, 80%, 86%));
+  --titlebar-pink-text: hsl(240, 30%, 20%);
+
+  --desk-base: hsl(280, 40%, 90%);
+  --desk-gradient: linear-gradient(180deg, hsl(330, 50%, 88%) 0%, hsl(280, 40%, 85%) 50%, hsl(240, 50%, 82%) 100%);
+  --grid-line: hsla(0, 0%, 100%, 0.38);
+  --dot: hsla(270, 50%, 75%, 0.38);
+  --ghost: hsla(270, 50%, 75%, 0.3);
+  --taskbar: hsla(220, 50%, 25%, 0.97);
+
+  /* Legacy brand tokens still used by shared ui pieces */
   --brand-pink: hsl(330, 70%, 80%);
   --brand-purple: hsl(270, 50%, 75%);
   --brand-blue: hsl(210, 70%, 75%);
   --retro-bg: hsl(280, 40%, 92%);
   --retro-dark: hsl(240, 30%, 20%);
-  --pill-bg: #ffffff;
-
-  /* Semantic Typography Variables (Light Mode Readability) */
-  --text-primary: hsl(240, 30%, 20%);
-  --text-secondary: hsl(240, 10%, 35%);
-  --text-tertiary: hsl(240, 8%, 45%);
-  --text-muted: hsl(240, 6%, 52%);
-
-  /* Page Background & Grid (Light Mode) */
-  --bg-gradient: linear-gradient(180deg, hsl(330, 50%, 88%) 0%, hsl(280, 40%, 85%) 50%, hsl(240, 50%, 82%) 100%);
-  --grid-color: hsla(271, 43%, 90%, 0.97);
 }
 
 :root[data-theme="dark"] {
-  --background:    hsl(240, 25%, 12%);
-  --foreground:    hsl(280, 60%, 92%);
-  --brand-pink:    hsl(330, 60%, 65%);
-  --brand-purple:  hsl(270, 55%, 65%);
-  --brand-blue:    hsl(210, 60%, 60%);
-  --retro-bg:      hsl(240, 25%, 12%);
-  --retro-dark:    hsl(280, 60%, 92%);
-  --pill-bg:       hsl(240, 20%, 18%);
+  --ink: hsl(280, 60%, 94%);
+  --ink-soft: hsl(270, 25%, 80%);
+  --muted: hsl(270, 14%, 68%);
+  --on-ink: hsl(240, 25%, 12%);
+  --window: hsl(240, 22%, 15%);
+  --window-alt: hsl(240, 20%, 19%);
+  --window-line: hsl(240, 16%, 24%);
+  --edge: hsl(270, 30%, 72%);
+  --edge-soft: hsla(270, 30%, 80%, 0.22);
+  --hard: hsl(240, 40%, 4%);
+  --soft-shadow: hsla(240, 60%, 2%, 0.65);
+  --accent: hsl(330, 80%, 74%);
+  --accent-shadow: hsl(330, 55%, 50%);
+  --accent-glyph: hsl(330, 80%, 74%);
 
-  /* Semantic Typography Variables (Dark Mode Readability) */
-  --text-primary: hsl(280, 60%, 95%);
-  --text-secondary: hsl(270, 30%, 80%);
-  --text-tertiary: hsl(270, 20%, 75%);
-  --text-muted: hsl(270, 10%, 65%);
+  --tint-lilac: hsl(270, 30%, 34%);
+  --tint-pink: hsl(330, 35%, 34%);
+  --tint-blue: hsl(210, 35%, 32%);
+  --tint-sky: hsl(200, 40%, 30%);
+  --tint-teal: hsl(180, 30%, 28%);
+  --tint-yellow: hsl(45, 40%, 30%);
+  --wash-lilac: hsl(270, 25%, 22%);
+  --wash-pink: hsl(330, 25%, 22%);
+  --wash-blue: hsl(210, 25%, 21%);
+  --wash-sky: hsl(200, 28%, 20%);
+  --wash-teal: hsl(180, 22%, 19%);
+  --wash-yellow: hsl(45, 25%, 19%);
 
-  /* Premium Midnight Navy Background & Grid (Dark Mode) */
-  --bg-gradient: linear-gradient(
-    180deg,
-    hsl(224, 71%, 4%) 0%,
-    hsl(222, 47%, 11%) 50%,
-    hsl(217, 33%, 17%) 100%
-  );
-  --grid-color: hsla(220, 40%, 20%, 0.45);
-}
+  --titlebar-pink: linear-gradient(90deg, hsl(330, 55%, 64%), hsl(330, 55%, 74%));
 
-/* Global Text Theme Mapping for Perfect Contrast */
-.text-gray-900, .text-slate-900, .text-slate-800, .text-retro-dark {
-  color: var(--text-primary) !important;
-}
-.text-gray-700, .text-slate-700 {
-  color: var(--text-secondary) !important;
-}
-.text-gray-600, .text-slate-600 {
-  color: var(--text-tertiary) !important;
-}
-.text-gray-500, .text-slate-500, .text-gray-400, .text-slate-400 {
-  color: var(--text-muted) !important;
-}
+  --desk-base: hsl(224, 60%, 6%);
+  --desk-gradient: linear-gradient(180deg, hsl(224, 71%, 4%) 0%, hsl(222, 47%, 11%) 50%, hsl(217, 33%, 17%) 100%);
+  --grid-line: hsla(220, 40%, 45%, 0.16);
+  --dot: hsla(270, 40%, 65%, 0.16);
+  --ghost: hsla(270, 50%, 75%, 0.1);
 
-/* Dark mode body gradient */
-[data-theme="dark"] body {
-  background-image: var(--bg-gradient);
-}
-
-/* Bulletproof Dark Mode Background & Border Mappings */
-[data-theme="dark"] .bg-white {
-  background-color: hsl(240, 20%, 18%) !important;
-}
-[data-theme="dark"] .bg-slate-50, [data-theme="dark"] .bg-gray-50 {
-  background-color: hsl(240, 20%, 15%) !important;
-}
-[data-theme="dark"] .bg-slate-100, [data-theme="dark"] .bg-gray-100 {
-  background-color: hsl(240, 20%, 13%) !important;
-}
-[data-theme="dark"] .hover\:bg-gray-50:hover, 
-[data-theme="dark"] .hover\:bg-slate-50:hover,
-[data-theme="dark"] .group:hover .hover\:bg-gray-50 {
-  background-color: hsl(240, 20%, 22%) !important;
-}
-[data-theme="dark"] .hover\:bg-gray-100:hover,
-[data-theme="dark"] .hover\:bg-slate-100:hover {
-  background-color: hsl(240, 20%, 25%) !important;
-}
-
-/* Dark Mode Borders */
-[data-theme="dark"] .border-gray-200,
-[data-theme="dark"] .border-slate-200,
-[data-theme="dark"] .border-gray-100,
-[data-theme="dark"] .border-slate-100 {
-  border-color: hsl(240, 15%, 26%) !important;
-}
-
-/* Dark Mode Purple Accents and Badges */
-[data-theme="dark"] .bg-purple-50 {
-  background-color: hsl(270, 30%, 22%) !important;
-}
-[data-theme="dark"] .bg-purple-100 {
-  background-color: hsl(270, 35%, 26%) !important;
-}
-[data-theme="dark"] .text-purple-600 {
-  color: hsl(270, 50%, 75%) !important;
-}
-[data-theme="dark"] .text-purple-700 {
-  color: hsl(270, 50%, 80%) !important;
-}
-[data-theme="dark"] .text-purple-800 {
-  color: hsl(270, 60%, 85%) !important;
-}
-[data-theme="dark"] .border-purple-200 {
-  border-color: hsl(270, 30%, 35%) !important;
+  --brand-pink: hsl(330, 60%, 65%);
+  --brand-purple: hsl(270, 55%, 65%);
+  --brand-blue: hsl(210, 60%, 60%);
+  --retro-bg: hsl(240, 25%, 12%);
+  --retro-dark: hsl(280, 60%, 92%);
 }
 
 @theme {
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-on-ink: var(--on-ink);
+  --color-window: var(--window);
+  --color-window-alt: var(--window-alt);
+  --color-window-line: var(--window-line);
+  --color-edge: var(--edge);
+  --color-edge-soft: var(--edge-soft);
+  --color-hard: var(--hard);
+  --color-accent: var(--accent);
+  --color-accent-glyph: var(--accent-glyph);
+  --color-tint-lilac: var(--tint-lilac);
+  --color-tint-pink: var(--tint-pink);
+  --color-tint-blue: var(--tint-blue);
+  --color-tint-sky: var(--tint-sky);
+  --color-tint-teal: var(--tint-teal);
+  --color-tint-yellow: var(--tint-yellow);
+  --color-wash-lilac: var(--wash-lilac);
+  --color-wash-pink: var(--wash-pink);
+  --color-wash-blue: var(--wash-blue);
+  --color-wash-sky: var(--wash-sky);
+  --color-wash-teal: var(--wash-teal);
+  --color-wash-yellow: var(--wash-yellow);
+
   --color-brand-pink: var(--brand-pink);
   --color-brand-purple: var(--brand-purple);
   --color-brand-blue: var(--brand-blue);
   --color-retro-bg: var(--retro-bg);
   --color-retro-dark: var(--retro-dark);
-  --color-primary: var(--primary);
-  --color-accent: var(--accent);
 
-  --background-image-page-gradient: linear-gradient(180deg, var(--brand-pink), var(--brand-purple), var(--brand-blue));
-  --background-image-retro-titlebar: linear-gradient(90deg, hsl(210, 70%, 85%), hsl(210, 70%, 75%));
-  --background-image-retro-grid: repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(255, 255, 255, 0.2) 20px), repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(255, 255, 255, 0.2) 20px);
-
-  --font-mono: var(--font-dotgothic), "Courier New", monospace;
-  --font-sans: var(--font-nunito), sans-serif;
+  --shadow-hard-sm: 0 2px 0 var(--hard);
+  --shadow-hard: 0 4px 0 var(--hard);
+  --shadow-hard-lg: 0 6px 0 var(--hard);
+  --shadow-accent: 0 4px 0 var(--accent-shadow);
+  --shadow-window: 0 30px 70px -20px var(--soft-shadow);
+  --shadow-window-sm: 0 18px 40px -18px var(--soft-shadow);
 
   --animate-float: float 3s ease-in-out infinite;
-  --animate-marquee: marquee 15s linear infinite;
   --animate-pulse2: pulse2 2s ease-in-out infinite;
+  --animate-ticker: ticker 48s linear infinite;
+  --animate-swing: swing 3.8s ease-in-out infinite;
+  --animate-blink: blink 1s steps(1) infinite;
+  --animate-pop: pop 450ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
 
@@ -143,13 +150,24 @@
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
   }
-  @keyframes marquee {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
-  }
   @keyframes pulse2 {
     0%, 100% { transform: scale(1); opacity: 1; }
     50% { transform: scale(1.05); opacity: 0.8; }
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes swing {
+    0%, 100% { transform: rotate(-3.5deg); }
+    50% { transform: rotate(3.5deg); }
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+  @keyframes pop {
+    from { opacity: 0; transform: translateY(8px) scale(0.985); }
+    to { opacity: 1; transform: none; }
   }
   @keyframes accordion-down {
     from { height: 0; }
@@ -161,19 +179,30 @@
   }
 }
 
+/* next/font defines its variables on <body>, so font tokens must resolve where they're used */
+@theme inline {
+  --font-mono: var(--font-dotgothic), "Courier New", monospace;
+  --font-sans: var(--font-nunito), sans-serif;
+  --font-hand: var(--font-caveat), cursive;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    background-color: var(--retro-bg);
-    background-image: var(--bg-gradient);
-    background-attachment: fixed;
-    color: var(--retro-dark);
+    background-color: var(--desk-base);
+    color: var(--ink);
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 3px solid hsl(330, 60%, 48%);
+    outline-offset: 3px;
   }
 
   /* Custom cursors */
@@ -195,52 +224,47 @@
 }
 
 @layer components {
-  .polaroid {
-    background: white;
-    padding: 12px 12px 40px 12px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    transform: rotate(2deg);
-    display: inline-block;
-    max-width: 320px;
-    border-radius: 2px;
+  /* Pastel desktop wallpaper: 40px white grid over the gradient */
+  .desk-grid {
+    background-image:
+      repeating-linear-gradient(0deg, transparent 0 39px, var(--grid-line) 39px 40px),
+      repeating-linear-gradient(90deg, transparent 0 39px, var(--grid-line) 39px 40px);
   }
-  .polaroid img {
-    display: block;
-    width: 100%;
-    height: 280px;
-    object-fit: cover;
-    object-position: top center;
+
+  .dot-grid {
+    background-image: radial-gradient(var(--dot) 1.2px, transparent 1.6px);
+    background-size: 18px 18px;
   }
-  .polaroid-caption {
-    font-family: var(--font-caveat), cursive;
-    font-size: 24px;
-    text-align: center;
-    color: hsl(240 30% 30%);
-    margin-top: 12px;
-    line-height: 1;
+
+  .titlebar-blue {
+    background: var(--titlebar-blue);
+    color: #ffffff;
   }
-}
 
+  .titlebar-pink {
+    background: var(--titlebar-pink);
+    color: var(--titlebar-pink-text);
+  }
 
-
-/* Taskbar marquee minimum size guard */
-.animate-marquee span {
-  font-family: var(--font-dotgothic), monospace !important;
-  font-size: min(11px, 0.7rem) !important;
-}
-
-/* Category badges & Skill pills typography adjustments */
-.category-badge {
-  font-family: var(--font-nunito), sans-serif !important;
-  font-size: 11px !important;
-}
-
-.skill-pill {
-  font-family: var(--font-nunito), sans-serif !important;
+  .barcode {
+    background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 4px, var(--ink) 4px 5px, transparent 5px 8px, var(--ink) 8px 11px, transparent 11px 13px);
+  }
 }
 
 @layer utilities {
   .font-mono {
     font-family: var(--font-dotgothic), "Courier New", monospace !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ticker,
+  .animate-swing,
+  .animate-blink,
+  .animate-pop,
+  .animate-float,
+  .animate-bounce,
+  .animate-pulse {
+    animation: none !important;
   }
 }

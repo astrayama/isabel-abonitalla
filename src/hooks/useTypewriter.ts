@@ -31,8 +31,10 @@ export function useTypewriter(
           setDisplayText(currentString.slice(0, displayText.length - 1));
         }, erasingSpeed);
       } else {
-        setIsTyping(true);
-        setStringIndex((prev) => (prev + 1) % strings.length);
+        timeout = setTimeout(() => {
+          setIsTyping(true);
+          setStringIndex((prev) => (prev + 1) % strings.length);
+        }, typingSpeed);
       }
     }
 

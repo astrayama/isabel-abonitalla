@@ -7,12 +7,13 @@ import "./globals.css";
 import Background from "@/components/layout/Background";
 import FloatingDecor from "@/components/layout/FloatingDecor";
 import Taskbar from "@/components/layout/Taskbar";
+import TickerStrip from "@/components/layout/TickerStrip";
 
 const nunito = Nunito({
   subsets: ["latin"],
   variable: "--font-nunito",
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 const dotGothic = DotGothic16({
@@ -23,7 +24,7 @@ const dotGothic = DotGothic16({
 });
 
 const caveat = Caveat({
-  weight: ["400", "700"],
+  weight: ["500", "700"],
   subsets: ["latin"],
   variable: "--font-caveat",
   display: "swap",
@@ -64,11 +65,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      <body className={`${nunito.variable} ${dotGothic.variable} ${caveat.variable} font-sans antialiased pb-10`}>
+      <body className={`${nunito.variable} ${dotGothic.variable} ${caveat.variable} font-sans antialiased pb-12`}>
         <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem={false}>
           <Background />
           <FloatingDecor />
-          <div className="relative z-10">{children}</div>
+          <div className="relative z-10">
+            <TickerStrip />
+            {children}
+          </div>
           <Taskbar />
         </ThemeProvider>
         <Analytics />

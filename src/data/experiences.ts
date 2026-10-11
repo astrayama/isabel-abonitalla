@@ -1,7 +1,12 @@
+export type ExperienceTag = 'school' | 'internship' | 'work' | 'community' | 'teaching' | 'founder';
+
 export type Experience = {
   company: string;
   role: string;
-  startDate: string;    // e.g. "May 2022"
+  tag: ExperienceTag;
+  fileName?: string;    // timeline file label, defaults to "<company>.exp"
+  note?: string;        // shown after the company, e.g. a GPA
+  startDate: string;    // e.g. "May 2022"; empty for something still in progress
   endDate: string;      // e.g. "Aug 2022" or "Present"
   location: string;
   logoUrl: string;
@@ -11,8 +16,21 @@ export type Experience = {
 
 export const experiences: Experience[] = [
   {
+    company: "Purdue",
+    role: "Cloud computing degree",
+    tag: "school",
+    fileName: "purdue.edu",
+    note: "3.99 GPA",
+    startDate: "",
+    endDate: "Present",
+    location: "",
+    logoUrl: "",
+    bullets: []
+  },
+  {
     company: "Microsoft",
     role: "Software Engineer Intern",
+    tag: "internship",
     startDate: "May 2022",
     endDate: "Aug 2022",
     location: "Atlanta, GA",
@@ -24,6 +42,7 @@ export const experiences: Experience[] = [
   {
     company: "Major League Hacking",
     role: "Hackathon Coach",
+    tag: "community",
     startDate: "Mar 2022",
     endDate: "Jan 2024",
     location: "New York, NY",
@@ -36,6 +55,7 @@ export const experiences: Experience[] = [
   {
     company: "Hunter College",
     role: "Undergraduate Teaching Assistant",
+    tag: "teaching",
     startDate: "Feb 2022",
     endDate: "Dec 2022",
     location: "New York, NY",
@@ -48,6 +68,7 @@ export const experiences: Experience[] = [
   {
     company: "Craving",
     role: "Founder",
+    tag: "founder",
     startDate: "Aug 2021",
     endDate: "Mar 2022",
     location: "New York, NY",
@@ -61,6 +82,7 @@ export const experiences: Experience[] = [
   {
     company: "Roblox",
     role: "Product Management Intern",
+    tag: "internship",
     startDate: "May 2021",
     endDate: "Aug 2021",
     location: "San Mateo, CA",
@@ -73,6 +95,7 @@ export const experiences: Experience[] = [
   {
     company: "Oden Technologies Inc.",
     role: "Software Engineer Intern",
+    tag: "internship",
     startDate: "Feb 2021",
     endDate: "May 2021",
     location: "New York, NY",
@@ -85,6 +108,7 @@ export const experiences: Experience[] = [
   {
     company: "JumpButton Studio",
     role: "Director of Partnerships, Web Developer and Project Manager",
+    tag: "work",
     startDate: "Jan 2021",
     endDate: "Oct 2021",
     location: "Philadelphia, PA",
@@ -97,6 +121,7 @@ export const experiences: Experience[] = [
   {
     company: "Research Foundation of City University of New York",
     role: "Teaching Assistant",
+    tag: "teaching",
     startDate: "Sep 2020",
     endDate: "Dec 2020",
     location: "New York, NY",
@@ -109,6 +134,7 @@ export const experiences: Experience[] = [
   {
     company: "Hunter College Google Developer Student Club",
     role: "Founder & President",
+    tag: "community",
     startDate: "Jul 2020",
     endDate: "Dec 2023",
     location: "New York, NY",
@@ -121,6 +147,7 @@ export const experiences: Experience[] = [
   {
     company: "The Purple Hydrangea Project",
     role: "Lead Developer and Board Member",
+    tag: "community",
     startDate: "Jun 2020",
     endDate: "Sep 2021",
     location: "Chino Hills, CA",
@@ -133,6 +160,7 @@ export const experiences: Experience[] = [
   {
     company: "HackGuild",
     role: "Founder and Executive Director",
+    tag: "founder",
     startDate: "May 2020",
     endDate: "Mar 2021",
     location: "New York, NY",
@@ -145,6 +173,7 @@ export const experiences: Experience[] = [
   {
     company: "Caribou Health",
     role: "Web Development Intern",
+    tag: "internship",
     startDate: "May 2020",
     endDate: "Aug 2020",
     location: "Toronto, Ontario, Canada",
@@ -157,6 +186,7 @@ export const experiences: Experience[] = [
   {
     company: "CUNY Hackathon",
     role: "Lead Organizer",
+    tag: "community",
     startDate: "Feb 2020",
     endDate: "Jul 2022",
     location: "New York, NY",
@@ -169,6 +199,7 @@ export const experiences: Experience[] = [
   {
     company: "Fiera Capital Inc.",
     role: "Operations and IT Intern",
+    tag: "internship",
     startDate: "Jan 2020",
     endDate: "Jul 2020",
     location: "New York, NY",

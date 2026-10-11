@@ -1,45 +1,44 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useSyncExternalStore } from 'react';
 import { OPEN_TO_WORK } from '@/config/site';
 import { useTheme } from 'next-themes';
 import { Sun, Moon } from 'lucide-react';
+import { navSections } from '@/data/profile';
+import { useActiveSection } from '@/hooks/useActiveSection';
+import { useHasMounted } from '@/hooks/useMediaQuery';
+import { cn } from '@/lib/utils';
 
-const navItems = [
-  { label: 'hero.exe', href: '#hero' },
-  { label: 'about.txt', href: '#about' },
-  { label: 'skills.exe', href: '#skills' },
-  { label: 'experience.log', href: '#experience' },
-  { label: 'projects/', href: '#projects' },
-  { label: 'press/', href: '#press' },
-  { label: 'contact.exe', href: '#contact' },
+const menuItems = [
+  ...navSections.slice(0, 6),
+  { id: 'achievements', label: 'achievements/' },
+  ...navSections.slice(6),
 ];
 
+const formatTime = () =>
+  new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+const subscribeClock = (tick: () => void) => {
+  const id = setInterval(tick, 1000);
+  return () => clearInterval(id);
+};
+
+const noopSubscribe = () => () => {};
+const readStartClicked = () => !!sessionStorage.getItem('start-clicked');
+
 export default function Taskbar() {
-  const [time, setTime] = useState<string>('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [clickedNow, setClickedNow] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  
-  const [hasBeenClicked, setHasBeenClicked] = useState(() => {
-    if (typeof window === 'undefined') return true;
-    return !!sessionStorage.getItem('start-clicked');
-  });
+  const mounted = useHasMounted();
+  const time = useSyncExternalStore(subscribeClock, formatTime, () => '');
+  // The START button pulses until it's been clicked once this session
+  const clickedBefore = useSyncExternalStore(noopSubscribe, readStartClicked, () => true);
+  const hasBeenClicked = clickedNow || clickedBefore;
 
-  useEffect(() => setMounted(true), []);
-
-  useEffect(() => {
-    const updateClock = () => {
-      const now = new Date();
-      setTime(now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }));
-    };
-
-    updateClock();
-    const intervalId = setInterval(updateClock, 1000);
-    return () => clearInterval(intervalId);
-  }, []);
+  const [active, setActive] = useActiveSection(navSections.map((s) => s.id));
+  const isDark = mounted && theme === 'dark';
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -47,7 +46,7 @@ export default function Taskbar() {
         setIsMenuOpen(false);
       }
     };
-    
+
     if (isMenuOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     }
@@ -57,107 +56,115 @@ export default function Taskbar() {
   }, [isMenuOpen]);
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 h-10 bg-[hsl(220,50%,25%)]/95 flex items-center justify-between px-4">
-      {/* Left section: START button & Menu */}
-      <div className="relative flex items-center h-full" ref={menuRef}>
+    <div className="fixed bottom-0 left-0 right-0 z-50 flex h-12 items-center gap-2.5 bg-[hsla(220,50%,25%,0.97)] px-3 text-white">
+      {/* START button & menu */}
+      <div className="relative flex h-full flex-none items-center" ref={menuRef}>
         {isMenuOpen && (
-          <div className="absolute bottom-full left-0 mb-1 w-48 bg-slate-100 border-2 border-slate-300 rounded-t-lg shadow-xl overflow-hidden flex flex-col p-1 z-50">
+          <div className="absolute bottom-full left-0 z-50 mb-1.5 flex w-52 overflow-hidden rounded-t-xl border-2 border-edge bg-window shadow-hard animate-pop">
             {/* Sidebar decoration */}
-            <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-b from-brand-pink to-brand-purple flex items-end justify-center pb-2">
-              <span className="text-white font-sans text-[11px] font-bold tracking-widest" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
-                ISABEL
+            <div className="flex w-8 flex-none items-end justify-center bg-gradient-to-b from-tint-pink to-tint-lilac pb-2">
+              <span
+                className="font-mono text-[11px] tracking-[0.25em] text-ink"
+                style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+              >
+                isaOS
               </span>
             </div>
-            
-            <div className="ml-8 bg-white flex flex-col py-1 border border-slate-200 min-h-[200px]">
-              {navItems.map((item) => (
+
+            <nav aria-label="Start menu" className="flex min-w-0 flex-1 flex-col py-1">
+              {menuItems.map((item) => (
                 <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="px-4 py-2 text-xs font-sans font-semibold text-slate-800 hover:bg-brand-blue hover:text-white transition-colors"
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    setActive(item.id);
+                  }}
+                  className="px-4 py-2 font-mono text-xs text-ink transition-colors hover:bg-ink hover:text-on-ink"
                 >
                   {item.label}
                 </a>
               ))}
-              
-              <div className="mt-auto"></div>
-              {/* Theme toggle row — inside the menu, above the close area */}
-              <div className="border-t border-slate-200 mt-1 pt-1">
+
+              <div className="mt-1 border-t border-window-line pt-1">
                 <button
-                  onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                  className="w-full flex items-center justify-between px-4 py-2
-                    font-mono text-sm text-slate-700 hover:bg-brand-blue hover:text-white
-                    transition-colors"
+                  onClick={() => setTheme(isDark ? 'light' : 'dark')}
+                  className="flex w-full items-center justify-between px-4 py-2 font-mono text-xs text-ink transition-colors hover:bg-ink hover:text-on-ink"
                   aria-label="Toggle dark mode"
                 >
-                  <div className="flex items-center gap-2">
-                    {mounted && theme === 'dark'
-                      ? <Sun className="w-4 h-4" />
-                      : <Moon className="w-4 h-4" />}
-                    <span>{mounted && theme === 'dark' ? 'light mode' : 'dark mode'}</span>
-                  </div>
-                  {/* Toggle pill */}
-                  <div className={`relative w-8 h-4 rounded-full transition-colors ${
-                    mounted && theme === 'dark' ? 'bg-brand-purple' : 'bg-slate-300'
-                  }`}>
-                    <div className={`absolute top-0.5 w-3 h-3 rounded-full bg-white shadow
-                      transition-transform ${mounted && theme === 'dark' ? 'translate-x-4' : 'translate-x-0.5'}`}
+                  <span className="flex items-center gap-2">
+                    {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
+                    {isDark ? 'light mode' : 'dark mode'}
+                  </span>
+                  <span className={cn('relative h-4 w-8 rounded-full transition-colors', isDark ? 'bg-tint-lilac' : 'bg-edge-soft')}>
+                    <span
+                      className={cn(
+                        'absolute top-0.5 size-3 rounded-full bg-white shadow transition-transform',
+                        isDark ? 'translate-x-4' : 'translate-x-0.5'
+                      )}
                     />
-                  </div>
+                  </span>
                 </button>
               </div>
-            </div>
+            </nav>
           </div>
         )}
-        <button 
+        <button
           onClick={() => {
             setIsMenuOpen(!isMenuOpen);
             if (!hasBeenClicked) {
-              setHasBeenClicked(true);
+              setClickedNow(true);
               sessionStorage.setItem('start-clicked', '1');
             }
           }}
-          className={`flex items-center gap-1.5 border-2 rounded px-3 py-1
-            text-white text-xs font-mono transition-all
-            ${isMenuOpen
+          aria-expanded={isMenuOpen}
+          className={cn(
+            'min-h-[38px] rounded-md border-2 px-3 font-mono text-[13px] text-white transition-all',
+            isMenuOpen
               ? 'border-white/60 bg-white/20'
               : hasBeenClicked
-                ? 'border-white/40 hover:bg-white/10'
-                : 'border-brand-pink/80 hover:bg-white/10 animate-pulse'
-            }`}
+                ? 'border-tint-pink hover:bg-white/10'
+                : 'animate-pulse border-tint-pink hover:bg-white/10'
+          )}
         >
-          <span>❤️</span>
-          <span>START</span>
+          ♥ START
         </button>
       </div>
 
-      {/* Open to Work Indicator */}
+      {/* Open to work indicator */}
       {OPEN_TO_WORK && (
-        <div className="ml-3 flex items-center gap-1.5 bg-green-50 dark:bg-green-500/15 border border-green-200 dark:border-green-400/30 rounded-full px-2.5 py-0.5 flex-shrink-0">
-          <span className="w-1.5 h-1.5 rounded-full bg-green-500 dark:bg-green-400 animate-pulse flex-shrink-0" />
-          <span className="font-sans text-[11px] font-semibold text-green-600 dark:text-green-400 whitespace-nowrap">
-            open to work
-          </span>
-        </div>
+        <span className="inline-flex flex-none items-center gap-1.5 rounded-full border border-green-200 bg-green-50 px-2.5 py-1 text-xs font-extrabold text-green-700">
+          <span className="block size-[7px] animate-pulse rounded-full bg-green-500" />
+          open to work
+        </span>
       )}
 
-      {/* Center section (marquee) */}
-      <div className="flex-1 mx-4 overflow-hidden whitespace-nowrap">
-        <div
-          className="inline-block animate-marquee"
-          style={{ animationDuration: '30s' }}
-        >
-          <span className="font-mono text-xs text-white/80">
-            ★ Isabel Abonitalla's Portfolio ★ CS Undergrad @ Purdue ★ 18x Hackathon Winner ★ Product Builder ★ Accessibility Advocate ★
-          </span>
-        </div>
-      </div>
+      {/* Section tabs */}
+      <nav aria-label="Open windows" className="hidden min-w-0 flex-1 gap-1.5 overflow-x-auto md:flex">
+        {navSections.map((section) => {
+          const on = active === section.id;
+          return (
+            <a
+              key={section.id}
+              href={`#${section.id}`}
+              onClick={() => setActive(section.id)}
+              aria-current={on ? 'true' : undefined}
+              className={cn(
+                'inline-flex h-9 flex-none items-center rounded-md border px-3 font-mono text-xs transition-all duration-200',
+                on
+                  ? 'border-[hsl(330,70%,90%)] bg-[hsl(330,70%,82%)] text-[hsl(240,30%,20%)] shadow-[inset_0_2px_0_hsla(240,30%,20%,0.25)]'
+                  : 'border-white/20 bg-white/[0.08] text-white/90 hover:bg-white/15'
+              )}
+            >
+              {section.label}
+            </a>
+          );
+        })}
+      </nav>
+      <div className="flex-1 md:hidden" />
 
-      {/* Right section (clock) */}
-      <div className="font-sans text-xs font-semibold text-white min-w-[70px] text-right">
-        {time}
-      </div>
+      {/* Clock */}
+      <span className="min-w-[64px] flex-none text-right font-mono text-[13px]">{time}</span>
     </div>
   );
 }

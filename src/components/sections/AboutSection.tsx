@@ -1,103 +1,68 @@
 'use client';
 
-import React, { useState } from 'react';
-import Image from 'next/image';
-import OSWindow from '../ui/OSWindow';
-import { funFacts } from '@/data/funFacts';
+import React from 'react';
+import { Eyebrow, HandAccent } from '@/components/ui/SectionHeading';
+import IdBadge from './about/IdBadge';
+import QuickFacts from './about/QuickFacts';
+import { links } from '@/data/profile';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { cn } from '@/lib/utils';
+
+const pillLink = 'inline-flex min-h-[46px] items-center rounded-full px-5 font-extrabold no-underline';
 
 export const AboutSection: React.FC = () => {
-  const [displayedFact, setDisplayedFact] = useState<string | null>(null);
-  const [fadeIn, setFadeIn] = useState(false);
-  const { ref, isVisible } = useScrollReveal();
-
-  const handleFunFactClick = () => {
-    const randomIndex = Math.floor(Math.random() * funFacts.length);
-    setFadeIn(false);
-    setTimeout(() => {
-      setDisplayedFact(funFacts[randomIndex]);
-      setFadeIn(true);
-    }, 150);
-  };
+  const { ref: bioRef, isVisible: bioVisible } = useScrollReveal();
+  const { ref: factsRef, isVisible: factsVisible } = useScrollReveal();
 
   return (
     <section
       id="about"
-      ref={ref}
-      className={`relative py-20 px-4 md:px-8 max-w-4xl mx-auto w-full transition-all duration-1000 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-      }`}
+      className="relative z-20 mx-auto flex max-w-[1200px] flex-wrap items-start gap-10 px-4 pt-2 pb-24 sm:px-6"
     >
-      <h2 className="font-mono text-4xl md:text-5xl font-bold text-retro-dark mb-10">
-        about<span className="text-pink-500">•</span>
-      </h2>
+      <div
+        ref={bioRef}
+        className={cn(
+          'min-w-0 flex-[1_1_360px] transition-all duration-1000 lg:pt-[72px]',
+          bioVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
+        )}
+      >
+        <Eyebrow>ABOUT.TXT</Eyebrow>
+        <h2 className="m-0 font-mono text-[clamp(38px,5vw,66px)] leading-none font-normal">
+          Hi, I&apos;m <HandAccent>Isabel.</HandAccent>
+        </h2>
+        <p className="mt-[22px] text-lg leading-[1.65] text-ink-soft">
+          I&apos;m a software engineer turned product manager with a founder&apos;s instinct. I&apos;ve shipped products
+          at Microsoft and Roblox, coached 1,000+ hackers at Major League Hacking, and built an AI journaling SaaS
+          from zero to paying customers.
+        </p>
+        <p className="mt-3.5 text-lg leading-[1.65] text-ink-soft">
+          Currently finishing a cloud computing degree at Purdue and looking for PM or product engineer roles.
+        </p>
+        <div className="mt-[26px] flex flex-wrap gap-2.5">
+          <a href={links.resume} target="_blank" rel="noopener noreferrer" className={cn(pillLink, 'bg-ink px-[22px] text-on-ink')}>
+            résumé ↓
+          </a>
+          <a href={links.github} target="_blank" rel="noopener noreferrer" className={cn(pillLink, 'border-2 border-edge-soft bg-window text-ink')}>
+            github ↗
+          </a>
+          <a href={links.linkedin} target="_blank" rel="noopener noreferrer" className={cn(pillLink, 'border-2 border-edge-soft bg-window text-ink')}>
+            linkedin ↗
+          </a>
+        </div>
+      </div>
 
-        {/* Two-Panel Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-12 items-start">
-          {/* Left Panel - Text Window */}
-          <div
-            className={`md:col-span-3 transform transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-              }`}
-          >
-            <OSWindow title="about.txt">
-              <div className="p-6 space-y-5">
-                {/* Bio Text */}
-                <p className="text-gray-700 leading-relaxed text-sm md:text-base">
-                  Hi, I'm{' '}
-                  <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-red-500 via-yellow-500 via-green-500 via-blue-500 to-purple-500 dark:from-pink-400 dark:via-red-400 dark:via-yellow-400 dark:via-green-400 dark:via-blue-400 dark:to-purple-400">
-                    Isabel Sofia V. Abonitalla
-                  </span>
-                  . I'm a software engineer turned product manager with a founder's instinct. I've shipped products at Microsoft and Roblox, coached 1,000+ hackers at Major League Hacking, and built an AI journaling SaaS from zero to paying customers.
-                  <br />
-                  I'm one of MLH's Top 50 most influential hackathon community members out of 135,000+ globally, and an 18× winner — including First Place at the Maternal Mortality & Morbidity Code-a-thon.
-                  <br />
-                  Currently finishing a cloud computing degree at Purdue (3.99 GPA) and actively looking for PM or FDE roles and <a href="https://screenseiji.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:text-purple-700 underline underline-offset-4 decoration-purple-600/30 hover:decoration-purple-600">pursuing personal projects</a>.
-                  <br />
-                  The rest of me? Hit the button. ↓
-                </p>
+      <div className="relative z-10 mx-auto flex-[0_1_300px] lg:-mt-11">
+        <IdBadge />
+      </div>
 
-                {/* Fun Fact Button */}
-                <button
-                  onClick={handleFunFactClick}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-pink-400 hover:bg-pink-500 text-white rounded-lg font-medium transition-colors duration-200 text-sm"
-                >
-                  <span className="text-lg">✦</span>
-                  Want to learn more? Click here to see a random fun fact about me!
-                </button>
-
-                {/* Fun Fact Display */}
-                {displayedFact && (
-                  <div
-                    className={`p-4 bg-gradient-to-r from-pink-50 to-purple-50 border border-pink-200 rounded-lg transition-all duration-300 ${fadeIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-1'
-                      }`}
-                  >
-                    <p className="text-gray-700 text-sm md:text-base italic">
-                      "{displayedFact}"
-                    </p>
-                  </div>
-                )}
-              </div>
-            </OSWindow>
-          </div>
-
-          {/* Right Panel - Image Window */}
-          <div
-            className={`md:col-span-2 flex justify-center items-start transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-              }`}
-          >
-            <div className="polaroid hover:rotate-0 transition-transform duration-300 cursor-pointer">
-              <Image
-                src="/images/isa.png"
-                alt="Isabel Abonitalla"
-                width={280}
-                height={360}
-                className="rounded-sm"
-                style={{ filter: 'brightness(1.08) saturate(0.9)' }}
-                priority
-              />
-              <p className="polaroid-caption">isabel. ✿</p>
-            </div>
-          </div>
+      <div
+        ref={factsRef}
+        className={cn(
+          'min-w-0 flex-[1_1_280px] transition-all delay-200 duration-1000 lg:pt-[72px]',
+          factsVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
+        )}
+      >
+        <QuickFacts />
       </div>
     </section>
   );

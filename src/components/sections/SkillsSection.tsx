@@ -1,92 +1,119 @@
 'use client';
 
 import React, { useState } from 'react';
-import OSWindow from '@/components/ui/OSWindow';
+import SectionHeading from '@/components/ui/SectionHeading';
 import { skillFolders } from '@/data/skills';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { cn } from '@/lib/utils';
+
+// Flatten the folders into numbered "elements"
+const tiles = skillFolders.flatMap((folder) =>
+  folder.elements.map((element) => ({ ...element, folder: folder.id, tint: folder.tint }))
+).map((tile, i) => ({ ...tile, num: String(i + 1).padStart(2, '0') }));
 
 export default function SkillsSection() {
-  const [activeFolderId, setActiveFolderId] = useState('languages');
+  const [activeFolderId, setActiveFolderId] = useState('all');
+  const [inspected, setInspected] = useState(0);
   const { ref, isVisible } = useScrollReveal();
 
-  const activeFolder = skillFolders.find((f) => f.id === activeFolderId) || skillFolders[0];
+  const chips = [{ id: 'all', label: 'all/', tint: null }, ...skillFolders];
+  const current = tiles[inspected];
 
   return (
     <section
       id="skills"
       ref={ref}
-      className={`py-20 px-4 md:px-8 max-w-4xl mx-auto w-full transition-all duration-700 ${
+      className={`mx-auto w-full max-w-[1200px] px-4 py-14 transition-all duration-700 sm:px-6 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
       }`}
     >
-      <h2 className="font-mono text-4xl md:text-5xl font-bold text-retro-dark mb-10">
-        skills<span className="text-purple-600">.</span>
-      </h2>
+      <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
+        <SectionHeading
+          eyebrow="SKILLS.EXE"
+          title="the periodic table"
+          accent="of my stack"
+          size="sm"
+          className="min-w-0 flex-[1_1_520px]"
+        />
+        <p className="m-0 flex-[0_1_340px] text-[15px] leading-[1.55] text-ink-soft">
+          {tiles.length} elements in {skillFolders.length} folders. Hover or tap a tile to inspect it, or open a
+          folder to light it up.
+        </p>
+      </div>
 
-      <div className="w-full">
-        <OSWindow title="skills.exe" className="w-full">
-          <div className="bg-slate-100 px-6 pt-3 pb-6 md:px-8 md:pt-4 md:pb-8 flex flex-col">
-            {/* Folder Tabs Row */}
-            <div className="flex flex-wrap gap-1 md:gap-1.5 mb-0 border-b border-gray-300 px-2 pt-2 relative z-10">
-              {skillFolders.map((folder) => {
-                const isActive = folder.id === activeFolderId;
-                return (
-                  <button
-                    key={folder.id}
-                    onClick={() => setActiveFolderId(folder.id)}
-                    className="rounded-t-lg px-3 py-1.5 md:px-4 md:py-2 font-sans text-xs md:text-sm transition-all focus:outline-none tracking-wide shadow-sm hover:shadow-md"
-                    style={{
-                      backgroundColor: folder.color,
-                      opacity: isActive ? 1 : 0.65,
-                      borderBottom: isActive ? `3px solid ${folder.color}` : '3px solid transparent',
-                      marginBottom: isActive ? '-1px' : '0',
-                      zIndex: isActive ? 10 : 1,
-                      transform: isActive ? 'scale(1.04)' : 'scale(1)',
-                      transformOrigin: 'bottom',
-                      color: '#000',
-                      fontWeight: isActive ? 700 : 500
-                    }}
-                  >
-                    {folder.label}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Folder Content */}
-            <div 
-              className="bg-white rounded-b-lg p-6 md:p-8 shadow-sm flex-1 border border-gray-200 relative z-0 min-h-[180px] md:min-h-[220px]" 
-              style={{ borderTop: 'none', borderTopLeftRadius: 0 }}
+      <div role="group" aria-label="Skill folders" className="mt-[22px] mb-4 flex flex-wrap gap-2">
+        {chips.map((chip) => {
+          const on = activeFolderId === chip.id;
+          return (
+            <button
+              key={chip.id}
+              onClick={() => setActiveFolderId(chip.id)}
+              aria-pressed={on}
+              className={cn(
+                'inline-flex min-h-10 items-center gap-[7px] rounded-full border-2 px-3.5 text-[13px] font-extrabold text-ink transition-all duration-200',
+                on ? 'border-edge shadow-hard' : 'border-edge-soft bg-window shadow-[0_2px_0_hsla(240,30%,20%,0.12)]'
+              )}
+              style={on && chip.tint ? { background: `var(--tint-${chip.tint})` } : on ? { background: 'var(--window)' } : undefined}
             >
-              {/* <h3 className="font-mono text-lg mb-6 flex items-center gap-2" style={{ color: activeFolder.color }}>
-                {activeFolder.label}
-              </h3> */}
-              <div className="flex flex-wrap gap-3 md:gap-4">
-                {activeFolder.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="skill-pill font-sans text-xs md:text-sm font-bold rounded-full px-4.5 py-2.5 border-2 transition-all duration-300 cursor-default hover:scale-105 shadow-sm hover:shadow-md tracking-wide"
-                    style={{
-                      backgroundColor: 'var(--pill-bg)',
-                      borderColor: activeFolder.color,
-                      color: activeFolder.color,
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = activeFolder.color;
-                      e.currentTarget.style.color = '#000000'; // high accessibility dark text contrast for active soft hues
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = 'var(--pill-bg)';
-                      e.currentTarget.style.color = activeFolder.color;
-                    }}
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
+              <span
+                className="block size-[11px] rounded-[3px] border border-[hsla(240,30%,20%,0.3)]"
+                style={{ background: chip.tint ? `var(--tint-${chip.tint})` : '#ffffff' }}
+              />
+              {chip.label}
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="flex flex-wrap items-start gap-5">
+        <div className="grid min-w-0 flex-[999_1_480px] grid-cols-[repeat(auto-fill,minmax(50px,1fr))] gap-1.5">
+          {tiles.map((tile, i) => {
+            const lit = activeFolderId === 'all' || activeFolderId === tile.folder;
+            const hovered = inspected === i;
+            return (
+              <button
+                key={tile.sym}
+                onMouseEnter={() => setInspected(i)}
+                onFocus={() => setInspected(i)}
+                onClick={() => setInspected(i)}
+                aria-label={`${tile.name}, ${tile.folder}`}
+                title={tile.name}
+                className={cn(
+                  'flex aspect-square min-w-0 flex-col justify-between rounded-[9px] border-2 px-[5px] py-1 text-left text-ink',
+                  'transition-[opacity,filter,transform,box-shadow] duration-200 ease-[cubic-bezier(.2,.8,.2,1)]',
+                  hovered ? '-translate-y-[3px] -rotate-3 border-edge shadow-hard' : 'border-[hsla(240,30%,20%,0.14)] shadow-[0_2px_0_hsla(240,30%,20%,0.22)]',
+                  lit ? 'opacity-100' : 'opacity-20 grayscale-[0.7]'
+                )}
+                style={{ background: `var(--tint-${tile.tint})` }}
+              >
+                <span className="font-mono text-[8px] leading-none opacity-75">{tile.num}</span>
+                <span className="font-mono text-lg leading-none">{tile.sym}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="w-full overflow-hidden rounded-xl border-2 border-edge bg-window shadow-hard sm:max-w-[300px] sm:flex-[1_1_260px] lg:sticky lg:top-6">
+          <div className="titlebar-blue flex h-[30px] items-center justify-between px-2.5 font-mono text-xs">
+            <span>inspector.exe</span>
+            <span>#{current.num}</span>
+          </div>
+          <div className="dot-grid flex items-center gap-3.5 p-3.5" aria-live="polite">
+            <div
+              key={current.num}
+              className="flex h-[76px] flex-[0_0_76px] animate-pop flex-col justify-between rounded-[13px] border-2 border-edge px-[9px] py-[7px] shadow-hard"
+              style={{ background: `var(--tint-${current.tint})` }}
+            >
+              <span className="font-mono text-[10px]">{current.num}</span>
+              <span className="font-mono text-[30px] leading-none">{current.sym}</span>
+            </div>
+            <div className="min-w-0">
+              <p className="m-0 text-[17px] leading-tight font-black">{current.name}</p>
+              <p className="mt-1.5 mb-0 font-mono text-xs text-muted">C:/skills/{current.folder}/</p>
+              <p className="mt-1.5 mb-0 font-hand text-[19px] font-bold text-ink-soft">hover any element ✦</p>
             </div>
           </div>
-        </OSWindow>
+        </div>
       </div>
     </section>
   );

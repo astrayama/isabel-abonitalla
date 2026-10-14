@@ -30,13 +30,13 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://isabel-abonitalla.lovable.app"),
+  metadataBase: new URL("https://isabel-abonitalla.vercel.app"),
   title: "Isabel Abonitalla - Product Builder, CS Undergrad, Accessibility Advocate",
   description: "Portfolio of Isabel Abonitalla: Product Builder, Computer Science Undergrad, and Accessibility Advocate, designed in a retro kawaii OS aesthetic.",
   openGraph: {
     title: "Isabel Abonitalla - Product Builder, CS Undergrad, Accessibility Advocate",
     description: "Portfolio of Isabel Abonitalla: Product Builder, Computer Science Undergrad, and Accessibility Advocate, designed in a retro kawaii OS aesthetic.",
-    url: "https://isabel-abonitalla.lovable.app",
+    url: "https://isabel-abonitalla.vercel.app",
     siteName: "Isabel Abonitalla Portfolio",
     images: [
       {
@@ -54,6 +54,9 @@ export const metadata: Metadata = {
     title: "Isabel Abonitalla - Product Builder, CS Undergrad, Accessibility Advocate",
     description: "Portfolio of Isabel Abonitalla: Product Builder, Computer Science Undergrad, and Accessibility Advocate, designed in a retro kawaii OS aesthetic.",
     images: ["/og-image.png"],
+  },
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
   },
 };
 

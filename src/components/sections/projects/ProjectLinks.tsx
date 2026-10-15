@@ -1,5 +1,6 @@
 import React from 'react';
-import { Code, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
+import { BookOpen, Code, ExternalLink } from 'lucide-react';
 import type { Project } from '@/data/projects';
 import { cn } from '@/lib/utils';
 
@@ -31,12 +32,31 @@ export function ProjectLink({ url, label, icons = true, className }: LinkOptions
   );
 }
 
+// Case studies live on this site, so they use the secondary style and a client-side Link
+export function CaseStudyLink({ href, icons = true, className }: Omit<LinkOptions, 'label'> & { href: string }) {
+  return (
+    <Link
+      href={href}
+      className={cn(
+        'inline-flex items-center justify-center gap-2 rounded-full border-2 border-edge-soft bg-window px-4 font-extrabold whitespace-nowrap text-ink no-underline transition-colors hover:border-edge',
+        className
+      )}
+    >
+      {icons && <BookOpen className="size-4" aria-hidden="true" />}
+      {icons ? 'Case Study' : 'case study →'}
+    </Link>
+  );
+}
+
 export function ProjectLinks({ project, ...options }: LinkOptions & { project: Project }) {
   return (
     <>
       {[project.projectUrl, project.repoUrl].filter(Boolean).map((url) => (
         <ProjectLink key={url} url={url!} {...options} />
       ))}
+      {project.caseStudyUrl && (
+        <CaseStudyLink href={project.caseStudyUrl} icons={options.icons} className={options.className} />
+      )}
     </>
   );
 }

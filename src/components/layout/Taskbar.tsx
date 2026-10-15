@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useSyncExternalStore } from 'react';
+import { usePathname } from 'next/navigation';
 import { OPEN_TO_WORK } from '@/config/site';
 import { useTheme } from 'next-themes';
 import { Sun, Moon } from 'lucide-react';
@@ -40,6 +41,10 @@ export default function Taskbar() {
   const [active, setActive] = useActiveSection(navSections.map((s) => s.id));
   const isDark = mounted && theme === 'dark';
 
+  // Sections live on the homepage; from other pages (case studies) link back to them
+  const onHome = usePathname() === '/';
+  const sectionHref = (id: string) => (onHome ? `#${id}` : `/#${id}`);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -75,7 +80,7 @@ export default function Taskbar() {
               {menuItems.map((item) => (
                 <a
                   key={item.id}
-                  href={`#${item.id}`}
+                  href={sectionHref(item.id)}
                   onClick={() => {
                     setIsMenuOpen(false);
                     setActive(item.id);
@@ -142,11 +147,11 @@ export default function Taskbar() {
       {/* Section tabs */}
       <nav aria-label="Open windows" className="hidden min-w-0 flex-1 gap-1.5 overflow-x-auto md:flex">
         {navSections.map((section) => {
-          const on = active === section.id;
+          const on = onHome && active === section.id;
           return (
             <a
               key={section.id}
-              href={`#${section.id}`}
+              href={sectionHref(section.id)}
               onClick={() => setActive(section.id)}
               aria-current={on ? 'true' : undefined}
               className={cn(

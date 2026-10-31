@@ -69,7 +69,7 @@ export default function ExperienceWindow({ item, onClose }: { item: Placed | nul
               {exp.tag}
             </span>
             <span className={chip}>
-              {exp.startDate} – {exp.endDate}
+              {exp.startDate === exp.endDate ? exp.startDate : `${exp.startDate} – ${exp.endDate}`}
             </span>
             <span className={chip}>{lengthLabel(item)}</span>
             {exp.location && <span className={chip}>{exp.location}</span>}

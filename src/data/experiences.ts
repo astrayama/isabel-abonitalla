@@ -85,8 +85,8 @@ export const experiences: Experience[] = [
     company: "Roblox",
     role: "Product Management Intern",
     tag: "internship",
-    startDate: "May 2021",
-    endDate: "Aug 2021",
+    startDate: "Jun 2021",
+    endDate: "Sep 2021",
     location: "San Mateo, CA",
     logoUrl: "/images/companies/roblox.jpg",
     bullets: [
@@ -164,7 +164,7 @@ export const experiences: Experience[] = [
     role: "Founder and Executive Director",
     tag: "founder",
     startDate: "May 2020",
-    endDate: "Mar 2021",
+    endDate: "Feb 2021",
     location: "New York, NY",
     logoUrl: "/images/companies/hg.png",
     bullets: [
@@ -186,11 +186,12 @@ export const experiences: Experience[] = [
     ]
   },
   {
-    company: "CUNY Hackathon",
+    company: "HackCUNY",
     role: "Lead Organizer",
     tag: "community",
+    note: "CUNY Startups",
     startDate: "Feb 2020",
-    endDate: "Jul 2022",
+    endDate: "Mar 2024",
     location: "New York, NY",
     logoUrl: "/images/companies/hackathon.png",
     bullets: [
@@ -209,6 +210,120 @@ export const experiences: Experience[] = [
     bullets: [
       "Developed a data parser for 18 years of FBI crime reports",
       "Enhanced controls and reporting processes, saving 400 hours and $20,000 a year"
+    ]
+  },
+  {
+    company: "HAX",
+    role: "Director of Internal Affairs & Operations",
+    tag: "community",
+    startDate: "Aug 2019",
+    endDate: "May 2020",
+    location: "",
+    logoUrl: "",
+    bullets: [
+      "Led the Operations team: branding standards, financial reports, nonprofit compliance, and keeping goals and timelines on track",
+      "Onboarded new members and budgeted funding from sponsors",
+      "Created guidelines and standards to streamline tasks across divisions"
+    ]
+  },
+  {
+    company: "The City University of New York",
+    role: "Data Analytics Intern",
+    tag: "internship",
+    fileName: "cuny.exp",
+    startDate: "Jul 2019",
+    endDate: "Aug 2019",
+    location: "New York, NY",
+    logoUrl: "",
+    bullets: [
+      "Collected, analyzed, and organized student enrollment records with a team of 6",
+      "Standardized records for 250+ courses and validated 1,400+ institution records across CUNY",
+      "Tested and debugged Schedule Builder, a student-facing scheduling app, and wrote its user manual"
+    ]
+  },
+  {
+    company: "HAX",
+    role: "Director of Design",
+    tag: "community",
+    startDate: "Mar 2019",
+    endDate: "Aug 2019",
+    location: "",
+    logoUrl: "",
+    bullets: [
+      "Led the design of the logo, website, and social media posts",
+      "Created and maintained the branding guide and press kit"
+    ]
+  },
+  {
+    company: "Robert Wood Johnson University Hospital",
+    role: "Nursing Informatics Intern",
+    tag: "internship",
+    fileName: "rwjuh.exp",
+    note: "Break Through Tech Sprinternship",
+    startDate: "Jan 2019",
+    endDate: "Jan 2019",
+    location: "New Brunswick, NJ",
+    logoUrl: "",
+    bullets: [
+      "Trained nursing directors on HealthGrid for electronic medical records",
+      "Debugged and troubleshot Find Your Way, the hospital's in-house navigation app"
+    ]
+  },
+  {
+    company: "Columbia University Medical Center",
+    role: "Research Associate",
+    tag: "work",
+    fileName: "cumc.exp",
+    startDate: "Jun 2017",
+    endDate: "Aug 2018",
+    location: "New York, NY",
+    logoUrl: "",
+    bullets: [
+      "Used R in the MR-Science lab to compare brain metabolite levels in healthy patients and patients with multiple sclerosis",
+      "Applied machine learning to classify multiple sclerosis variants from proton spectroscopy data with 72% accuracy"
+    ]
+  },
+  {
+    company: "Khan's Tutorial",
+    role: "Quality Manager of HSAP Department",
+    tag: "teaching",
+    startDate: "Mar 2017",
+    endDate: "Feb 2019",
+    location: "New York, NY",
+    logoUrl: "",
+    bullets: [
+      "Promoted to manager after teaching 70 students; supervised 5 instructors teaching 210+ students for state exams and the SAT",
+      "Ran classroom logistics, inventory, and finances, and met with parents bi-monthly on student progress",
+      "Built a more efficient student database for the SAT program, was named Manager of the Month, and grew enrollment 20%"
+    ]
+  },
+  {
+    company: "Columbia Engineering",
+    role: "Student Intern",
+    tag: "internship",
+    note: "HK Maker Lab",
+    startDate: "Jul 2016",
+    endDate: "Aug 2016",
+    location: "New York, NY",
+    logoUrl: "",
+    bullets: [
+      "Prototyped a guidance system for the visually impaired using ultrasonic sensors on glasses, speakers, and Arduino",
+      "Wrote a business plan with my team and pitched it to a panel of biomedical professionals"
+    ]
+  },
+  {
+    company: "Icahn School of Medicine at Mount Sinai",
+    role: "Research Intern",
+    tag: "internship",
+    fileName: "mount-sinai.exp",
+    note: "Urban Barcode Research Program",
+    startDate: "Apr 2016",
+    endDate: "May 2017",
+    location: "New York, NY",
+    logoUrl: "",
+    bullets: [
+      "Characterized New York City soil biomes with next-generation sequencing and found a novel phage capable of killing Staph aureus",
+      "Took preparatory classes in conservation biology and DNA barcoding"
     ]
   }
 ];

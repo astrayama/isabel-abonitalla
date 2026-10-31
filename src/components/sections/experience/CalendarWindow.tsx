@@ -145,8 +145,8 @@ export default function CalendarWindow() {
                   key={item.exp.company + item.exp.role}
                   className="absolute hover:z-10"
                   style={{
-                    top: `calc(var(--month) * ${top - item.end - 1})`,
-                    height: `calc(var(--month) * ${item.end - item.start + 1} - 4px)`,
+                    top: `calc(var(--month) * ${top - item.last - 1})`,
+                    height: `calc(var(--month) * ${item.last - item.start + 1} - 4px)`,
                     ...(item.kind === 'rail'
                       ? { left: `calc(var(--gutter) + ${item.lane} * var(--rail))`, width: 'calc(var(--rail) - 4px)' }
                       : { left: `calc(var(--cards-x) + ${item.lane} * var(--lane))`, width: `calc(${item.span} * var(--lane) - 6px)` }),

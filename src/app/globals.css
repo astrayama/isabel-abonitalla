@@ -191,6 +191,11 @@
     scroll-behavior: smooth;
   }
 
+  /* An open modal window keeps the page behind it still */
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+
   body {
     background-color: var(--desk-base);
     color: var(--ink);

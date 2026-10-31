@@ -270,6 +270,19 @@ export const experiences: Experience[] = [
     ]
   },
   {
+    company: "Hunter College",
+    role: "Computer Science coursework",
+    tag: "school",
+    fileName: "hunter.edu",
+    display: "rail",
+    note: "Dean's List",
+    startDate: "Aug 2017",
+    endDate: "Dec 2024",
+    location: "New York, NY",
+    logoUrl: "/images/companies/hunter.jfif",
+    bullets: []
+  },
+  {
     company: "Columbia University Medical Center",
     role: "Research Associate",
     tag: "work",

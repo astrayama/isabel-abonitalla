@@ -5,8 +5,9 @@ export type Experience = {
   role: string;
   tag: ExperienceTag;
   fileName?: string;    // timeline file label, defaults to "<company>.exp"
+  display?: 'card' | 'rail'; // calendar style; community roles default to a side rail
   note?: string;        // shown after the company, e.g. a GPA
-  startDate: string;    // e.g. "May 2022"; empty for something still in progress
+  startDate: string;    // e.g. "May 2022"; the calendar places entries by these dates
   endDate: string;      // e.g. "Aug 2022" or "Present"
   location: string;
   logoUrl: string;
@@ -21,8 +22,8 @@ export const experiences: Experience[] = [
     tag: "school",
     fileName: "purdue.edu",
     note: "3.99 GPA",
-    startDate: "",
-    endDate: "Present",
+    startDate: "Jul 2025",
+    endDate: "Nov 2026",
     location: "",
     logoUrl: "",
     bullets: []
@@ -43,6 +44,7 @@ export const experiences: Experience[] = [
     company: "Major League Hacking",
     role: "Hackathon Coach",
     tag: "community",
+    display: "card",
     startDate: "Mar 2022",
     endDate: "Jan 2024",
     location: "New York, NY",
